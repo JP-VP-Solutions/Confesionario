@@ -1,4 +1,4 @@
-package com.confesiones.dto;
+package com.example.Confesionario.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

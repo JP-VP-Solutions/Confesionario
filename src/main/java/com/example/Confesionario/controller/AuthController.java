@@ -1,14 +1,14 @@
-package controller;
+package com.example.Confesionario.controller;
 
-import com.confesiones.dto.LoginRequest;
-import com.confesiones.dto.RegistroRequest;
-import com.confesiones.dto.UsuarioResponse;
+import com.example.Confesionario.dto.LoginRequest;
+import com.example.Confesionario.dto.RegistroRequest;
+import com.example.Confesionario.dto.UsuarioResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.AuthService;
+import com.example.Confesionario.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")

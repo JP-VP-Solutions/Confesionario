@@ -1,16 +1,16 @@
-package service;
+package com.example.Confesionario.service;
 
 
-import repository.ComentarioRepository;
-import repository.ConfesionRepository;
+import com.example.Confesionario.repository.ComentarioRepository;
+import com.example.Confesionario.repository.ConfesionRepository;
 
-import dto.ConfesionAdminDTO;
-import entities.Confesion;
-import entities.Usuario;
+import com.example.Confesionario.dto.ConfesionAdminDTO;
+import com.example.Confesionario.entities.Confesion;
+import com.example.Confesionario.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.UsuarioRepository;
+import com.example.Confesionario.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

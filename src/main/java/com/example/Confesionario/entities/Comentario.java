@@ -1,17 +1,18 @@
-package entities;
+package com.example.Confesionario.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "reacciones",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"confesion_id", "usuario_id"}))
+@Table(name = "comentarios")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reaccion {
+public class Comentario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +23,17 @@ public class Reaccion {
     private Confesion confesion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "autor_id", nullable = false)
+    private Usuario autor;
 
-    @Column(length = 20)
-    private String tipo = "like";
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String contenido;
+
+    @Column(name = "fecha")
+    private LocalDateTime fecha;
 
     @PrePersist
     protected void onCreate() {
-        if (tipo == null) {
-            tipo = "like";
-        }
+        fecha = LocalDateTime.now();
     }
 }

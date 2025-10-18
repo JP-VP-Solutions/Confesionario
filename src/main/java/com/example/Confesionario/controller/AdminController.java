@@ -1,7 +1,8 @@
-package controller;
+package com.example.Confesionario.controller;
 
-import com.confesiones.service.AdminService;
-import dto.ConfesionAdminDTO;
+
+import com.example.Confesionario.dto.ConfesionAdminDTO;
+import com.example.Confesionario.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

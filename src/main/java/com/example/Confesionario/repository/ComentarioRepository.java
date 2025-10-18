@@ -1,6 +1,6 @@
-package repository;
+package com.example.Confesionario.repository;
 
-import entities.Comentario;
+import com.example.Confesionario.entities.Comentario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package entities;
+package com.example.Confesionario.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

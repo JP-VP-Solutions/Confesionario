@@ -1,14 +1,14 @@
-package service;
+package com.example.Confesionario.service;
 
-import dto.ConfesionPublicaDTO;
-import com.confesiones.dto.ConfesionRequest;
-import entities.Confesion;
-import entities.Reaccion;
-import entities.Usuario;
-import repository.ComentarioRepository;
-import repository.ConfesionRepository;
-import repository.ReaccionRepository;
-import repository.UsuarioRepository;
+import com.example.Confesionario.dto.ConfesionPublicaDTO;
+import com.example.Confesionario.dto.ConfesionRequest;
+import com.example.Confesionario.entities.Confesion;
+import com.example.Confesionario.entities.Reaccion;
+import com.example.Confesionario.entities.Usuario;
+import com.example.Confesionario.repository.ComentarioRepository;
+import com.example.Confesionario.repository.ConfesionRepository;
+import com.example.Confesionario.repository.ReaccionRepository;
+import com.example.Confesionario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

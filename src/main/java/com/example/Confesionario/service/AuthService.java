@@ -1,13 +1,13 @@
-package service;
+package com.example.Confesionario.service;
 
-import com.confesiones.dto.LoginRequest;
-import com.confesiones.dto.RegistroRequest;
-import com.confesiones.dto.UsuarioResponse;
+import com.example.Confesionario.dto.LoginRequest;
+import com.example.Confesionario.dto.RegistroRequest;
+import com.example.Confesionario.dto.UsuarioResponse;
 
-import entities.Usuario;
+import com.example.Confesionario.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.UsuarioRepository;
+import com.example.Confesionario.repository.UsuarioRepository;
 
 @Service
 public class AuthService {

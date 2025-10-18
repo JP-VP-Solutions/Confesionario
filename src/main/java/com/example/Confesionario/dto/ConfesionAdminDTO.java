@@ -1,6 +1,6 @@
-package dto;
+package com.example.Confesionario.dto;
 
-import entities.Confesion;
+import com.example.Confesionario.entities.Confesion;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
