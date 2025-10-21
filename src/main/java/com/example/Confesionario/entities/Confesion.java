@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "confesiones")
@@ -24,6 +26,9 @@ public class Confesion {
     @JoinColumn(name = "autor_id", nullable = false)
     private Usuario autor;
 
+    @OneToMany(mappedBy = "confesion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios = new ArrayList<>();
+
     @Column(name = "fecha")
     private LocalDateTime fecha;
 
@@ -38,6 +43,17 @@ public class Confesion {
 
     @Column(name = "reportes")
     private Integer reportes = 0;
+
+    // Métodos de conveniencia para la relación bidireccional
+    public void agregarComentario(Comentario comentario) {
+        comentarios.add(comentario);
+        comentario.setConfesion(this);
+    }
+
+    public void eliminarComentario(Comentario comentario) {
+        comentarios.remove(comentario);
+        comentario.setConfesion(null);
+    }
 
     @PrePersist
     protected void onCreate() {

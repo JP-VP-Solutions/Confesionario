@@ -41,7 +41,7 @@ public class AdminService {
         return confesiones.stream()
                 .map(c -> {
                     int comentarios = (int) comentarioRepository.countByConfesionId(c.getId());
-                    return new ConfesionAdminDTO(c, comentarios);
+                    return new ConfesionAdminDTO(c);
                 })
                 .collect(Collectors.toList());
     }
