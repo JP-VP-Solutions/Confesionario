@@ -1,0 +1,113 @@
+<div class="login-container">
+  <div class="login-wrapper">
+    <!-- Card principal -->
+    <p-card styleClass="login-card">
+      <!-- Header con logo/título -->
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h1 class="title">🎭 Confiesa Anónimo</h1>
+          <p class="subtitle">Barrio Alberdi y todo Córdoba</p>
+        </div>
+      </ng-template>
+
+      <!-- Contenido del formulario -->
+      <div class="form-content">
+        <h2 class="form-title">Iniciar Sesión</h2>
+
+        <!-- Mensaje de error general -->
+        <p-message
+          *ngIf="errorMensaje"
+          severity="error"
+          [text]="errorMensaje"
+          styleClass="w-full mb-3">
+        </p-message>
+
+        <!-- Mensaje de servidor iniciando -->
+        <p-message
+          *ngIf="serverStarting"
+          severity="warn"
+          text="⏱️ El servidor está iniciando debido a inactividad. Esto puede tardar 1-2 minutos. Por favor, espera y vuelve a intentarlo."
+          styleClass="w-full mb-3">
+        </p-message>
+
+        <!-- Formulario -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <!-- Campo Username -->
+          <div class="field">
+            <label for="username">Usuario</label>
+            <input
+              id="username"
+              type="text"
+              pInputText
+              formControlName="username"
+              placeholder="Ingresa tu usuario"
+              [class.ng-invalid]="isFieldInvalid('username')"
+              [class.ng-dirty]="username?.dirty"
+              class="w-full" />
+
+            <small
+              *ngIf="isFieldInvalid('username')"
+              class="p-error">
+              {{ getErrorMessage('username') }}
+            </small>
+          </div>
+
+          <!-- Campo Password -->
+          <div class="field">
+            <label for="password">Contraseña</label>
+            <p-password
+              id="password"
+              formControlName="password"
+              placeholder="Ingresa tu contraseña"
+              [toggleMask]="true"
+              [feedback]="false"
+              styleClass="w-full"
+              [inputStyleClass]="isFieldInvalid('password') ? 'w-full ng-invalid ng-dirty' : 'w-full'">
+            </p-password>
+
+            <small
+              *ngIf="isFieldInvalid('password')"
+              class="p-error">
+              {{ getErrorMessage('password') }}
+            </small>
+          </div>
+
+          <!-- Botón de login -->
+          <div class="button-container">
+            <p-button
+              type="submit"
+              label="Iniciar Sesión"
+              icon="pi pi-sign-in"
+              [loading]="loading"
+              [disabled]="loading"
+              styleClass="w-full">
+            </p-button>
+          </div>
+
+        </form>
+
+        <!-- Divider -->
+        <p-divider></p-divider>
+
+        <!-- Link a registro -->
+        <div class="register-link">
+          <p>
+            ¿No tienes cuenta?
+            <a routerLink="/registro" class="link">Regístrate aquí</a>
+          </p>
+        </div>
+
+        <!-- Info adicional -->
+        <div class="info-box">
+          <p class="info-text">
+            <i class="pi pi-info-circle"></i>
+            💡 <strong>Primer uso:</strong> Si es tu primera vez accediendo,
+            el servidor puede tardar 1-2 minutos en iniciar debido a que
+            usamos hosting gratuito. ¡Gracias por tu paciencia!
+          </p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

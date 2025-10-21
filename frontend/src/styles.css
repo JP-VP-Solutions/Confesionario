@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+
+ .auth-container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     padding: 2rem;
+
+     .auth-card {
+       width: 100%;
+       max-width: 500px;
+       animation: fadeIn 0.5s ease-in-out;
+
+       .p-card {
+         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+         border-radius: 12px;
+         overflow: hidden;
+
+         .p-card-title {
+           text-align: center;
+           color: #2c3e50;
+           font-size: 1.8rem;
+           margin-bottom: 1.5rem;
+         }
+
+         .p-field {
+           margin-bottom: 1.5rem;
+
+           label {
+             display: block;
+             margin-bottom: 0.5rem;
+             font-weight: 500;
+             color: #4a5568;
+           }
+
+           input, .p-password {
+             width: 100%;
+           }
+
+           .p-error {
+             color: #e53e3e;
+             font-size: 0.875rem;
+             margin-top: 0.25rem;
+             display: block;
+           }
+         }
+
+         .p-button {
+           width: 100%;
+           margin-top: 1rem;
+           padding: 0.75rem;
+           font-size: 1rem;
+           font-weight: 600;
+         }
+
+         .p-divider {
+           margin: 1.5rem 0;
+
+           .p-tag {
+             background-color: #f7fafc;
+             color: #4a5568;
+             padding: 0.25rem 1rem;
+             font-weight: 500;
+           }
+         }
+
+         .auth-link {
+           text-align: center;
+           margin-top: 1rem;
+
+           .p-button {
+             width: auto;
+             padding: 0.5rem 1.5rem;
+           }
+         }
+       }
+     }
+   }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
