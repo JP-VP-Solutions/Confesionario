@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from '../enviroments/environment';
+import {ConfesionPublicaDTO, ConfesionRequest} from '../models/confesiones.dtos';
 
 
 @Injectable({
@@ -12,31 +13,31 @@ export class ConfesionesService {
 
   constructor(private http: HttpClient) {}
 
-  getPreview(): Observable<Confesion[]> {
-    return this.http.get<Confesion[]>(`${this.apiUrl}/preview`);
+  getPreview(): Observable<ConfesionPublicaDTO[]> {
+    return this.http.get<ConfesionPublicaDTO[]>(`${this.apiUrl}/preview`);
   }
 
-  getStats(): Observable<Stats> {
-    return this.http.get<Stats>(`${this.apiUrl}/stats`);
+  getStats(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/stats`);
   }
 
-  getAll(usuarioId: number): Observable<Confesion[]> {
+  getAll(usuarioId: number): Observable<ConfesionPublicaDTO[]> {
     const headers = new HttpHeaders().set('Usuario-Id', usuarioId.toString());
-    return this.http.get<Confesion[]>(this.apiUrl, { headers });
+    return this.http.get<ConfesionPublicaDTO[]>(this.apiUrl, { headers });
   }
 
-  create(usuarioId: number, data: ConfesionRequest): Observable<Confesion> {
+  create(usuarioId: number, data: ConfesionRequest): Observable<ConfesionPublicaDTO> {
     const headers = new HttpHeaders().set('Usuario-Id', usuarioId.toString());
-    return this.http.post<Confesion>(this.apiUrl, data, { headers });
+    return this.http.post<ConfesionPublicaDTO>(this.apiUrl, data, { headers });
   }
 
-  like(id: number, usuarioId: number): Observable<any> {
+  like(idConfesion: number, usuarioId: number): Observable<any> {
     const headers = new HttpHeaders().set('Usuario-Id', usuarioId.toString());
-    return this.http.post(`${this.apiUrl}/${id}/like`, {}, { headers });
+    return this.http.post(`${this.apiUrl}/${idConfesion}/like`, {}, { headers });
   }
 
-  unlike(id: number, usuarioId: number): Observable<any> {
+  unlike(idConfesion: number, usuarioId: number): Observable<any> {
     const headers = new HttpHeaders().set('Usuario-Id', usuarioId.toString());
-    return this.http.delete(`${this.apiUrl}/${id}/like`, { headers });
+    return this.http.delete(`${this.apiUrl}/${idConfesion}/like`, { headers });
   }
 }

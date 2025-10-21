@@ -1,4 +1,4 @@
-interface ComentarioAdminDTO {
+export interface ComentarioAdminDTO {
   id: number,
   contenido: string,
   autor: string,
@@ -6,8 +6,12 @@ interface ComentarioAdminDTO {
   fecha: string
 }
 
-interface ComentarioDTO {
+export interface ComentarioDTO {
   id: number,
   contenido: string,
   fecha: string
+}
+
+export interface ComentarioRequest{
+  contenido: string
 }
