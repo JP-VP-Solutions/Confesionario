@@ -1,5 +1,6 @@
 package com.example.Confesionario.service;
 
+import com.example.Confesionario.dto.ComentarioDTO;
 import com.example.Confesionario.dto.ConfesionPublicaDTO;
 import com.example.Confesionario.dto.ConfesionRequest;
 import com.example.Confesionario.entities.Confesion;
@@ -40,20 +41,49 @@ public class ConfesionService {
 
         return confesiones.stream()
                 .map(c -> {
-                    int comentarios = (int) comentarioRepository.countByConfesionId(c.getId());
-                    return new ConfesionPublicaDTO(c, comentarios);
+                    // Cargar los comentarios para esta confesión
+                    List<ComentarioDTO> comentarios = comentarioRepository.findByConfesionIdOrderByFechaAsc(c.getId())
+                            .stream()
+                            .map(comentario -> new ComentarioDTO(
+                                    comentario.getId(),
+                                    comentario.getContenido(),
+                                    comentario.getFecha()
+                            ))
+                            .collect(Collectors.toList());
+
+                    // Crear el DTO con los comentarios
+                    return new ConfesionPublicaDTO(
+                            c,
+                            comentarios.size(),
+                            comentarios
+                    );
                 })
                 .collect(Collectors.toList());
     }
 
     // Obtener todas las confesiones (usuarios logueados)
+    // Modificar el método getTodasLasConfesiones
     public List<ConfesionPublicaDTO> getTodasLasConfesiones() {
         List<Confesion> confesiones = confesionRepository.findByEliminadaFalseOrderByFechaDesc();
 
         return confesiones.stream()
                 .map(c -> {
-                    int comentarios = (int) comentarioRepository.countByConfesionId(c.getId());
-                    return new ConfesionPublicaDTO(c, comentarios);
+                    // Cargar los comentarios para esta confesión
+                    List<ComentarioDTO> comentarios = comentarioRepository.findByConfesionIdOrderByFechaAsc(c.getId())
+                            .stream()
+                            .map(comentario -> new ComentarioDTO(
+                                    comentario.getId(),
+                                    comentario.getContenido(),
+                                    comentario.getFecha()
+                            ))
+                            .collect(Collectors.toList());
+
+                    // Crear el DTO con los comentarios
+                    return new ConfesionPublicaDTO(
+                            c,
+                            comentarios.size(),
+                            comentarios
+                    );
                 })
                 .collect(Collectors.toList());
     }

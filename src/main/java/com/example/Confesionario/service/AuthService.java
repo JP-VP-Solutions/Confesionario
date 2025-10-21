@@ -30,7 +30,7 @@ public class AuthService {
         Usuario usuario = new Usuario();
         usuario.setUsername(request.getUsername());
         usuario.setEmail(request.getEmail());
-        usuario.setPassword(request.getPassword()); // TODO: Hashear después
+        usuario.setPassword(request.getPassword());
         usuario.setEsAdmin(false);
         usuario.setIpRegistro(ip);
         usuario.setBaneado(false);

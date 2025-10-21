@@ -6,46 +6,48 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfesionAdminDTO {
-
     private Long id;
     private String contenido;
-    private AutorInfo autor; // Información real del autor
+    private String autor;
+    private Long autorId;
     private LocalDateTime fecha;
     private Integer likes;
     private Integer comentarios;
-    private Integer reportes;
     private Boolean revelada;
     private Boolean eliminada;
+    private Integer reportes;
+    private List<ComentarioAdminDTO> listaComentarios;
 
     // Constructor desde Entity
-    public ConfesionAdminDTO(Confesion confesion, Integer cantidadComentarios) {
+    public ConfesionAdminDTO(Confesion confesion) {
         this.id = confesion.getId();
         this.contenido = confesion.getContenido();
-        this.autor = new AutorInfo(
-                confesion.getAutor().getId(),
-                confesion.getAutor().getUsername(),
-                confesion.getAutor().getEmail()
-        );
+        this.autor = confesion.getAutor().getUsername();
+        this.autorId = confesion.getAutor().getId();
         this.fecha = confesion.getFecha();
         this.likes = confesion.getLikes();
-        this.comentarios = cantidadComentarios;
-        this.reportes = confesion.getReportes();
+        this.comentarios = confesion.getComentarios() != null ? confesion.getComentarios().size() : 0;
         this.revelada = confesion.getRevelada();
         this.eliminada = confesion.getEliminada();
-    }
+        this.reportes = confesion.getReportes();
 
-    // Clase interna para info del autor
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AutorInfo {
-        private Long id;
-        private String username;
-        private String email;
+        if (confesion.getComentarios() != null) {
+            this.listaComentarios = confesion.getComentarios().stream()
+                    .map(comentario -> new ComentarioAdminDTO(
+                            comentario.getId(),
+                            comentario.getContenido(),
+                            comentario.getAutor().getUsername(),
+                            comentario.getAutor().getId(),
+                            comentario.getFecha()
+                    ))
+                    .collect(Collectors.toList());
+        }
     }
 }
