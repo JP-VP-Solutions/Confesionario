@@ -121,7 +121,7 @@
             <!-- Like (solo visual, sin lógica de usuario) -->
             <button
               class="action-btn like-btn"
-              (click)="$event.stopPropagation()">
+              (click)="darLike(confesion); $event.stopPropagation()">
               <i class="pi pi-heart"></i>
               <span>{{ confesion.likes || 0 }}</span>
             </button>
