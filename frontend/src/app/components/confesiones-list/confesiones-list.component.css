@@ -855,3 +855,189 @@
     padding: 0.6rem;
   }
 }
+
+/* ===== FIX PARA MÓVILES - AGREGAR AL FINAL DEL CSS EXISTENTE ===== */
+
+/* Quitar altura fija en móviles */
+@media (max-width: 768px) {
+  .confesiones-container {
+    min-height: auto;
+    padding: 1rem 1rem 5rem 1rem; /* Padding extra abajo para el footer */
+  }
+
+  .confesion-card {
+    min-height: auto; /* Quitar altura mínima */
+    max-height: none; /* Quitar altura máxima */
+  }
+
+  .card-content {
+    max-height: 300px; /* Limitar altura del contenido */
+    overflow-y: auto;
+  }
+
+  /* Scroll suave en móviles */
+  .card-content {
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+    scroll-behavior: smooth;
+  }
+
+  /* Scrollbar más visible en móviles */
+  .card-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .card-content::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+  }
+
+  .card-content::-webkit-scrollbar-thumb {
+    background: rgba(74, 144, 226, 0.8);
+    border-radius: 10px;
+  }
+
+  /* Grid más espaciado en móviles */
+  .confesiones-grid {
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* iPhone específico (pantallas pequeñas) */
+@media (max-width: 430px) {
+  .confesiones-container {
+    padding: 0.75rem 0.75rem 5rem 0.75rem;
+  }
+
+  .confesiones-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 1rem;
+  }
+
+  .confesion-card {
+    margin-bottom: 0;
+  }
+
+  .card-content {
+    max-height: 250px;
+  }
+
+  /* Footer stats más compacto */
+  .footer-stats {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .action-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .action-btn span {
+    font-size: 0.9rem;
+  }
+}
+
+/* Fix para evitar que el footer se superponga */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom); /* Para iPhone con notch */
+  }
+
+  /* Asegurar que el contenido no quede detrás del navbar de la app */
+  .confesiones-content {
+    padding-bottom: 1rem;
+  }
+}
+
+/* Mejor touch targets en móviles */
+@media (max-width: 768px) {
+  .action-btn,
+  .ver-completa-btn,
+  .ver-mas-btn {
+    min-height: 44px; /* Tamaño mínimo recomendado para iOS */
+    min-width: 44px;
+  }
+
+  /* Espaciado entre botones más generoso */
+  .admin-actions {
+    gap: 0.75rem;
+  }
+
+  .footer-stats {
+    gap: 0.75rem;
+  }
+}
+
+/* Scroll suave global en móviles */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  /* Prevenir bounce en iOS */
+  .confesiones-container {
+    overscroll-behavior: contain;
+  }
+}
+
+/* Fix para la altura de viewport en móviles */
+@media (max-width: 768px) {
+  .confesiones-container {
+    min-height: 100dvh; /* dvh = dynamic viewport height (mejor para móviles) */
+  }
+}
+
+/* Indicador visual de scroll */
+@media (max-width: 768px) {
+  .card-content.has-scroll::after {
+    content: '⬇️ Desliza para ver más';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0.5rem;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    pointer-events: none;
+    animation: fadeInOut 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+}
+
+/* Ajuste del grid para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .confesiones-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .confesion-card {
+    border-radius: 12px;
+  }
+
+  .card-header,
+  .card-content,
+  .card-footer {
+    padding: 0.75rem;
+  }
+
+  .confession-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}

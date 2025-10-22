@@ -117,18 +117,24 @@
         <!-- Footer con acciones ADMIN -->
         <div class="card-footer admin-footer">
           <div class="footer-stats">
-            <!-- Stats -->
-            <div class="stat-item">
+
+            <!-- Like (solo visual, sin lógica de usuario) -->
+            <button
+              class="action-btn like-btn"
+              (click)="$event.stopPropagation()">
               <i class="pi pi-heart"></i>
               <span>{{ confesion.likes || 0 }}</span>
-            </div>
+            </button>
 
-            <div class="stat-item">
+            <!-- Comentarios -->
+            <button
+              class="action-btn comment-btn"
+              (click)="verConfesionCompleta(confesion)">
               <i class="pi pi-comment"></i>
               <span>{{ confesion.comentarios || 0 }}</span>
-            </div>
+            </button>
 
-            <!-- Botón Ver Completa -->
+            <!-- Ver completa -->
             <button
               class="ver-completa-btn"
               (click)="verConfesionCompleta(confesion)">
