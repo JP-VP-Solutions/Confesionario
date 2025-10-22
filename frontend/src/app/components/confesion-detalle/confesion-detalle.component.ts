@@ -8,7 +8,6 @@ import { Textarea } from 'primeng/textarea';
 import { Button } from 'primeng/button';
 import { Divider } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
-import { InputTextarea } from 'primeng/inputtextarea';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
@@ -20,7 +19,6 @@ import { TooltipModule } from 'primeng/tooltip';
     Textarea,
     Button,
     CommonModule,
-    InputTextarea,
     Divider,
     TooltipModule
   ],
