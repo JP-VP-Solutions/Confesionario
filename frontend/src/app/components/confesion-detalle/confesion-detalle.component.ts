@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ComentarioService } from '../../services/comentario.service';
@@ -6,7 +6,6 @@ import { ConfesionPublicaDTO, ConfesionAdminDTO } from '../../models/confesiones
 import { ComentarioAdminDTO, ComentarioDTO } from '../../models/comentarios';
 import { Textarea } from 'primeng/textarea';
 import { Button } from 'primeng/button';
-import { ProgressSpinner } from 'primeng/progressspinner';
 import { Divider } from 'primeng/divider';
 import { CommonModule } from '@angular/common';
 import { InputTextarea } from 'primeng/inputtextarea';
@@ -27,7 +26,7 @@ import { TooltipModule } from 'primeng/tooltip';
   ],
   styleUrls: ['./confesion-detalle.component.css']
 })
-export class ConfesionDetalleComponent implements OnInit, OnDestroy {
+export class ConfesionDetalleComponent implements OnInit, OnChanges, OnDestroy {
   @Input() confesion!: ConfesionPublicaDTO | ConfesionAdminDTO | null;
   @Input() usuarioId: number | null = null;
   @Input() esAdmin = false;
@@ -55,6 +54,11 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Cargar comentarios desde la confesión
     this.cargarComentariosLocales();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['confesion'] && changes['confesion'].currentValue) {
+      this.cargarComentariosLocales();
+    }
   }
 
   ngOnDestroy(): void {

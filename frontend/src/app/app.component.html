@@ -54,17 +54,6 @@
         (click)="irAConfesiones()">
       </button>
 
-      <!-- Botón de admin (solo si es admin) -->
-      <button
-        *ngIf="authService.esAdmin()"
-        pButton
-        type="button"
-        label="Admin"
-        icon="pi pi-shield"
-        class="p-button-text p-button-warning"
-        (click)="irAAdmin()">
-      </button>
-
       <!-- Info del usuario -->
       <div class="user-info">
         <span class="username">{{ authService.usuarioActualValue?.username }}</span>
