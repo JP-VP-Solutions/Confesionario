@@ -1,48 +1,6 @@
 <div class="login-container">
   <div class="login-content-wrapper">
 
-    <!-- ===== STATS BANNER - ARRIBA DE TODO ===== -->
-    <div class="stats-banner">
-      <!-- Skeleton mientras carga -->
-      <div class="stats-container" *ngIf="loadingStats">
-        <div class="stats-skeleton">
-          <div class="stat-item">
-            <p-skeleton width="3rem" height="3rem" borderRadius="50%" styleClass="mx-auto mb-2"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem" styleClass="mx-auto mb-2"></p-skeleton>
-            <p-skeleton width="6rem" height="1rem" styleClass="mx-auto"></p-skeleton>
-          </div>
-          <div class="stat-item">
-            <p-skeleton width="3rem" height="3rem" borderRadius="50%" styleClass="mx-auto mb-2"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem" styleClass="mx-auto mb-2"></p-skeleton>
-            <p-skeleton width="6rem" height="1rem" styleClass="mx-auto"></p-skeleton>
-          </div>
-          <div class="stat-item">
-            <p-skeleton width="3rem" height="3rem" borderRadius="50%" styleClass="mx-auto mb-2"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem" styleClass="mx-auto mb-2"></p-skeleton>
-            <p-skeleton width="6rem" height="1rem" styleClass="mx-auto"></p-skeleton>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats cargados -->
-      <div class="stats-container" *ngIf="!loadingStats && stats">
-        <div class="stat-item">
-          <span class="stat-icon">📝</span>
-          <span class="stat-value">{{ stats.totalConfesiones }}</span>
-          <span class="stat-label">Confesiones</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-icon">👥</span>
-          <span class="stat-value">{{ stats.totalUsuarios }}</span>
-          <span class="stat-label">Usuarios</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-icon">🔥</span>
-          <span class="stat-value">{{ stats.confesionesHoy }}</span>
-          <span class="stat-label">Hoy</span>
-        </div>
-      </div>
-    </div>
 
     <!-- ===== CONTENEDOR PRINCIPAL (LOGIN + PREVIEW) ===== -->
     <div class="main-content">
@@ -200,7 +158,7 @@
                   <span><i class="pi pi-comment"></i> {{ confesion.comentarios || 0 }}</span>
                 </div>
               </div>
-
+ts
               <!-- Overlay bloqueador -->
               <div class="preview-overlay">
                 <div class="overlay-content">

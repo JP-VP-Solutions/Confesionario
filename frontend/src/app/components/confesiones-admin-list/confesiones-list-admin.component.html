@@ -1,14 +1,14 @@
-<div class="confesiones-container">
+<div class="confesiones-container admin-view">
 
   <!-- Header -->
   <div class="confesiones-header">
     <div class="header-content">
       <h1 class="header-title">
-        <span class="title-icon">🎭</span>
-        Confesiones Anónimas
+        <span class="title-icon">👑</span>
+        Panel de Administrador
       </h1>
       <p class="header-subtitle">
-        Córdoba, Argentina
+        🎭 Confesiones Anónimas - Vista Completa
       </p>
     </div>
 
@@ -63,7 +63,7 @@
     <div class="empty-state" *ngIf="confesiones.length === 0">
       <i class="pi pi-inbox empty-icon"></i>
       <h3>No hay confesiones aún</h3>
-      <p>Sé el primero en compartir tu historia</p>
+      <p>Sé el primero en compartir una historia</p>
       <p-button
         label="Crear Primera Confesión"
         icon="pi pi-plus"
@@ -79,7 +79,17 @@
         <div class="card-header">
           <div class="card-author">
             <i class="pi pi-user author-icon"></i>
-            <span class="author-name">Anónimo</span>
+            <span class="author-name">{{ confesion.autor }}</span>
+
+            <!-- Badge de Vista Admin -->
+            <span class="admin-badge">
+              <i class="pi pi-eye"></i> Admin
+            </span>
+
+            <!-- Badge de Revelado -->
+            <span class="revealed-badge" *ngIf="confesion.revelada">
+              <i class="pi pi-lock-open"></i> Revelado
+            </span>
           </div>
 
           <div class="card-date">
@@ -104,25 +114,19 @@
           </button>
         </div>
 
-        <!-- Footer con acciones -->
-        <div class="card-footer">
+        <!-- Footer con acciones ADMIN -->
+        <div class="card-footer admin-footer">
           <div class="footer-stats">
-            <!-- Botón Like -->
-            <button
-              class="action-btn like-btn"
-              [class.liked]="confesion.likeadoPorUsuario"
-              (click)="darLike(confesion); $event.stopPropagation()">
-              <i [class]="confesion.likeadoPorUsuario ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
+            <!-- Stats -->
+            <div class="stat-item">
+              <i class="pi pi-heart"></i>
               <span>{{ confesion.likes || 0 }}</span>
-            </button>
+            </div>
 
-            <!-- Botón Comentarios -->
-            <button
-              class="action-btn comment-btn"
-              (click)="verConfesionCompleta(confesion)">
+            <div class="stat-item">
               <i class="pi pi-comment"></i>
               <span>{{ confesion.comentarios || 0 }}</span>
-            </button>
+            </div>
 
             <!-- Botón Ver Completa -->
             <button
@@ -131,6 +135,26 @@
               <span>Ver completa</span>
               <i class="pi pi-arrow-right"></i>
             </button>
+          </div>
+
+          <!-- Acciones de Admin -->
+          <div class="admin-actions">
+            <p-button
+              icon="pi pi-eye"
+              (onClick)="revelarAutor(confesion)"
+              [disabled]="confesion.revelada"
+              pTooltip="Revelar Autor Públicamente"
+              tooltipPosition="top"
+              styleClass="p-button-rounded p-button-warning p-button-sm">
+            </p-button>
+
+            <p-button
+              icon="pi pi-trash"
+              (onClick)="eliminarConfesion(confesion)"
+              pTooltip="Eliminar Confesión"
+              tooltipPosition="top"
+              styleClass="p-button-rounded p-button-danger p-button-sm">
+            </p-button>
           </div>
         </div>
       </div>
@@ -151,7 +175,7 @@
 
   <ng-template pTemplate="header">
     <div class="dialog-header-custom">
-      <h3>💭 Confesión Completa</h3>
+      <h3>💭 Confesión Completa (Admin View)</h3>
     </div>
   </ng-template>
 
@@ -159,7 +183,7 @@
     *ngIf="confesionSeleccionada"
     [confesion]="confesionSeleccionada"
     [usuarioId]="usuarioId"
-    [esAdmin]="false"
+    [esAdmin]="true"
     (cerrar)="cerrarModalConfesion()"
     (comentarioAgregado)="onComentarioAgregado()">
   </app-confesion-detalle>

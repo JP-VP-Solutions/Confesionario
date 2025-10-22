@@ -6,12 +6,17 @@
       <div class="author-info">
         <i class="pi pi-user author-icon"></i>
         <span class="author-name">
-          {{ (esConfesionAdmin(confesion) && esAdmin && confesion?.autor) ? confesion?.autor : 'Anónimo' }}
+          {{ esConfesionAdmin(confesion) && esAdmin ? confesion!.autor : 'Anónimo' }}
         </span>
 
         <!-- Badge de Admin -->
-        <span class="admin-badge" *ngIf="esConfesionAdmin(confesion) && esAdmin && confesion?.autor">
+        <span class="admin-badge" *ngIf="esConfesionAdmin(confesion) && esAdmin">
           <i class="pi pi-eye"></i> Admin View
+        </span>
+
+        <!-- Badge de Revelado -->
+        <span class="revealed-badge" *ngIf="esConfesionAdmin(confesion) && confesion.revelada">
+          <i class="pi pi-lock-open"></i> Revelado
         </span>
       </div>
 
@@ -35,7 +40,7 @@
 
       <div class="stat-item">
         <i class="pi pi-comment"></i>
-        <span>{{ comentarios.length }} Comentarios</span>
+        <span>{{ cantidadComentarios }} Comentarios</span>
       </div>
     </div>
   </div>
@@ -46,7 +51,7 @@
   <div class="comentarios-section">
     <h3 class="comentarios-title">
       <i class="pi pi-comments"></i>
-      Comentarios ({{ comentarios.length }})
+      Comentarios ({{ cantidadComentarios }})
     </h3>
 
     <!-- Formulario para nuevo comentario -->
@@ -87,21 +92,15 @@
 
     <!-- Lista de Comentarios -->
     <div class="comentarios-lista">
-      <!-- Loading -->
-      <div class="comentarios-loading" *ngIf="loadingComentarios">
-        <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner>
-        <p>Cargando comentarios...</p>
-      </div>
-
       <!-- Sin comentarios -->
-      <div class="comentarios-empty" *ngIf="!loadingComentarios && comentarios.length === 0">
+      <div class="comentarios-empty" *ngIf="comentariosLocales.length === 0">
         <i class="pi pi-comment"></i>
         <p>Aún no hay comentarios</p>
         <small>¡Sé el primero en comentar!</small>
       </div>
 
       <!-- Comentarios -->
-      <div class="comentario-item" *ngFor="let comentario of comentarios">
+      <div class="comentario-item" *ngFor="let comentario of comentariosLocales">
         <div class="comentario-header">
           <div class="comentario-author">
             <i class="pi pi-user"></i>
@@ -110,8 +109,7 @@
             </span>
 
             <!-- Badge si es el autor de la confesión -->
-            <span class="autor-badge"
-                  *ngIf="esAdmin && esConfesionAdmin(confesion) && esComentarioAdmin(comentario) && comentario.autor === confesion.autor">
+            <span class="autor-badge" *ngIf="esAutorConfesion(comentario)">
               <i class="pi pi-star-fill"></i> Autor
             </span>
           </div>
@@ -124,7 +122,7 @@
             <!-- Botón eliminar (si es admin o es su comentario) -->
             <button
               class="delete-btn"
-              *ngIf="esAdmin || (esComentarioAdmin(comentario) && comentario.autorId === usuarioId)"
+              *ngIf="verificarPermisoEliminar(comentario)"
               (click)="eliminarComentario(comentario)"
               pTooltip="Eliminar comentario"
               tooltipPosition="top">

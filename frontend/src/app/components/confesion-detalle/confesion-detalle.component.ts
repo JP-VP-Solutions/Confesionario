@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ComentarioService } from '../../services/comentario.service';
-import { ConfesionesService } from '../../services/confesiones.service';
 import { ConfesionPublicaDTO, ConfesionAdminDTO } from '../../models/confesiones.dtos';
 import { ComentarioAdminDTO, ComentarioDTO } from '../../models/comentarios';
 import { Textarea } from 'primeng/textarea';
@@ -23,7 +22,6 @@ import { TooltipModule } from 'primeng/tooltip';
     Button,
     CommonModule,
     InputTextarea,
-    ProgressSpinner,
     Divider,
     TooltipModule
   ],
@@ -34,12 +32,12 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
   @Input() usuarioId: number | null = null;
   @Input() esAdmin = false;
   @Output() cerrar = new EventEmitter<void>();
+  @Output() comentarioAgregado = new EventEmitter<void>();
 
   private destroy$ = new Subject<void>();
 
-  // Comentarios - CORREGIDO
-  comentarios: (ComentarioDTO | ComentarioAdminDTO)[] = [];
-  loadingComentarios = true;
+  // Comentarios locales (copiados de la confesión)
+  comentariosLocales: (ComentarioDTO | ComentarioAdminDTO)[] = [];
 
   // Formulario de comentario
   comentarioForm: FormGroup;
@@ -47,8 +45,7 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private comentarioService: ComentarioService,
-    private confesionesService: ConfesionesService
+    private comentarioService: ComentarioService
   ) {
     this.comentarioForm = this.fb.group({
       contenido: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]]
@@ -56,7 +53,8 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cargarComentarios();
+    // Cargar comentarios desde la confesión
+    this.cargarComentariosLocales();
   }
 
   ngOnDestroy(): void {
@@ -65,24 +63,22 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Cargar comentarios de la confesión
+   * Cargar comentarios desde la confesión (no hace llamada al servicio)
    */
-  cargarComentarios(): void {
-    if (!this.confesion) return;
+  cargarComentariosLocales(): void {
+    if (!this.confesion) {
+      this.comentariosLocales = [];
+      return;
+    }
 
-    this.loadingComentarios = true;
-    this.comentarioService.obtenerComentarios(this.confesion.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          this.comentarios = data;
-          this.loadingComentarios = false;
-        },
-        error: (error) => {
-          console.error('Error al cargar comentarios:', error);
-          this.loadingComentarios = false;
-        }
-      });
+    // Obtener comentarios según el tipo de confesión
+    if (this.esConfesionAdmin(this.confesion)) {
+      // ConfesionAdminDTO tiene listaComentarios: ComentarioAdminDTO[]
+      this.comentariosLocales = this.confesion.listaComentarios || [];
+    } else {
+      // ConfesionPublicaDTO tiene listaComentarios: ComentarioDTO[]
+      this.comentariosLocales = this.confesion.listaComentarios || [];
+    }
   }
 
   /**
@@ -95,20 +91,26 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
     }
 
     this.enviandoComentario = true;
-    const contenido = this.comentarioForm.get('contenido')?.value;
+    const contenido = this.comentarioForm.get('contenido')?.value.trim();
 
     this.comentarioService.crearComentario(this.confesion.id, this.usuarioId, contenido)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (nuevoComentario) => {
-          this.comentarios.push(nuevoComentario);
-          this.comentarioForm.reset();
-          this.enviandoComentario = false;
+          // Agregar el nuevo comentario a la lista local
+          this.comentariosLocales.push(nuevoComentario);
 
-          // Actualizar contador de comentarios en la confesión
+          // Actualizar el contador en la confesión
           if (this.confesion) {
             this.confesion.comentarios = (this.confesion.comentarios || 0) + 1;
           }
+
+          // Limpiar formulario
+          this.comentarioForm.reset();
+          this.enviandoComentario = false;
+
+          // Notificar al componente padre
+          this.comentarioAgregado.emit();
         },
         error: (error) => {
           console.error('Error al enviar comentario:', error);
@@ -124,11 +126,8 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
   eliminarComentario(comentario: ComentarioDTO | ComentarioAdminDTO): void {
     if (!this.usuarioId || !this.confesion) return;
 
-    // Verificar si el comentario es de tipo Admin para acceder a autorId
-    const comentarioAdmin = this.esComentarioAdmin(comentario);
-
-    // Verificar si el usuario puede eliminar (es su comentario o es admin)
-    const puedeEliminar = this.esAdmin || (comentarioAdmin && comentario.id === this.usuarioId);
+    // Verificar permisos
+    const puedeEliminar = this.verificarPermisoEliminar(comentario);
 
     if (!puedeEliminar) {
       alert('No tienes permisos para eliminar este comentario');
@@ -140,11 +139,16 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.comentarios = this.comentarios.filter(c => c.id !== comentario.id);
-            // Actualizar contador
+            // Remover de la lista local
+            this.comentariosLocales = this.comentariosLocales.filter(c => c.id !== comentario.id);
+
+            // Actualizar el contador en la confesión
             if (this.confesion) {
               this.confesion.comentarios = Math.max(0, (this.confesion.comentarios || 0) - 1);
             }
+
+            // Notificar al componente padre
+            this.comentarioAgregado.emit();
           },
           error: (error) => {
             console.error('Error al eliminar comentario:', error);
@@ -152,6 +156,24 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  /**
+   * Verificar si el usuario puede eliminar un comentario
+   */
+  verificarPermisoEliminar(comentario: ComentarioDTO | ComentarioAdminDTO): boolean {
+    // Admin puede eliminar cualquier comentario
+    if (this.esAdmin) {
+      return true;
+    }
+
+    // Usuario normal solo puede eliminar sus propios comentarios
+    if (this.esComentarioAdmin(comentario)) {
+      return comentario.autorId === this.usuarioId;
+    }
+
+    // Para ComentarioDTO sin autorId, no se puede determinar
+    return false;
   }
 
   /**
@@ -166,6 +188,34 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
    */
   esComentarioAdmin(comentario: ComentarioDTO | ComentarioAdminDTO): comentario is ComentarioAdminDTO {
     return 'autor' in comentario && 'autorId' in comentario;
+  }
+
+  /**
+   * Obtener el nombre del autor de un comentario
+   */
+  obtenerAutorComentario(comentario: ComentarioDTO | ComentarioAdminDTO): string {
+    if (this.esAdmin && this.esComentarioAdmin(comentario)) {
+      return comentario.autor || 'Anónimo';
+    }
+    return 'Anónimo';
+  }
+
+  /**
+   * Verificar si el comentario es del autor de la confesión
+   */
+  esAutorConfesion(comentario: ComentarioDTO | ComentarioAdminDTO): boolean {
+    if (!this.esAdmin || !this.confesion) return false;
+
+    const confesionAdmin = this.esConfesionAdmin(this.confesion);
+    const comentarioAdmin = this.esComentarioAdmin(comentario);
+
+    if (confesionAdmin && comentarioAdmin) {
+      // Hacé un casting explícito para que TypeScript reconozca el tipo
+      const confesionConAutor = this.confesion as ConfesionAdminDTO;
+      return comentario.autorId === confesionConAutor.autorId;
+    }
+
+    return false;
   }
 
   /**
@@ -209,12 +259,9 @@ export class ConfesionDetalleComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Obtener el nombre del autor de un comentario (solo para admin)
+   * Obtener cantidad de comentarios
    */
-  obtenerAutorComentario(comentario: ComentarioDTO | ComentarioAdminDTO): string {
-    if (this.esAdmin && this.esComentarioAdmin(comentario)) {
-      return comentario.autor || 'Anónimo';
-    }
-    return 'Anónimo';
+  get cantidadComentarios(): number {
+    return this.comentariosLocales.length;
   }
 }

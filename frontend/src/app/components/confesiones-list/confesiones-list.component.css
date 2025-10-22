@@ -650,3 +650,208 @@
   align-items: center;
   gap: 0.5rem;
 }
+/* Footer de la Card - MEJORADO */
+.card-footer {
+  padding: 1rem 1.5rem;
+  background: rgba(15, 23, 42, 0.7);
+  border-top: 1px solid rgba(74, 144, 226, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-stats {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex: 1;
+}
+
+/* ===== BOTONES DE ACCIÓN MEJORADOS ===== */
+.action-btn {
+  background: rgba(74, 144, 226, 0.1);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  color: var(--text-light);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.action-btn:hover::before {
+  left: 100%;
+}
+
+.action-btn:hover {
+  background: rgba(74, 144, 226, 0.25);
+  border-color: var(--accent-blue);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.action-btn span {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Like Button - DESTACADO */
+.like-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.like-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.like-btn.liked {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #ef4444;
+  animation: heartBeat 0.5s ease-out;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.15); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.05); }
+}
+
+.like-btn.liked i {
+  color: #ef4444;
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Comment Button - DESTACADO */
+.comment-btn {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.comment-btn:hover {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.comment-btn:hover i {
+  transform: rotate(15deg);
+}
+
+/* Ver Más Button - DESTACADO */
+.ver-completa-btn {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(124, 58, 237, 0.15));
+  border: 1px solid rgba(74, 144, 226, 0.4);
+  color: var(--accent-blue);
+  padding: 0.6rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ver-completa-btn:hover {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.25), rgba(124, 58, 237, 0.25));
+  border-color: var(--accent-purple);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+}
+
+.ver-completa-btn i {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.ver-completa-btn:hover i {
+  transform: translateX(5px);
+}
+
+/* Admin Actions */
+.admin-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ===== RESPONSIVE - MÓVILES ===== */
+@media (max-width: 768px) {
+  .card-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .footer-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.7rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .ver-completa-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-btn span {
+    display: none; /* Ocultar números en móviles muy pequeños */
+  }
+
+  .action-btn {
+    padding: 0.6rem;
+  }
+}

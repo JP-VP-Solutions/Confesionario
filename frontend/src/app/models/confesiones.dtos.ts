@@ -5,6 +5,7 @@ export interface ConfesionRequest {
 }
 
 export interface ConfesionPublicaDTO {
+  likeadoPorUsuario: boolean;
   id: number,
   contenido: string,
   autor: string,

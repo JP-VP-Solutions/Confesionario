@@ -134,9 +134,12 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.loading = false;
 
-        // Obtener returnUrl de los query params o ir a confesiones por defecto
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/confesiones';
-        this.router.navigateByUrl(returnUrl);
+        // Redirigir según el rol
+        if (this.authService.esAdmin()) {
+          this.router.navigate(['/admin/confesiones']);
+        } else {
+          this.router.navigate(['/confesiones']);
+        }
       },
       error: (error) => {
         this.loading = false;

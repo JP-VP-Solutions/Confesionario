@@ -23,6 +23,16 @@
   </p-message>
 </div>
 
+<!-- ===== BARRA SUPERIOR (solo cuando NO está logueado) ===== -->
+<div class="top-brand-bar" *ngIf="!authService.estaAutenticado()">
+  <div class="brand-container">
+    <span class="brand-emoji">🎭</span>
+    <span class="brand-name">Confiesa Anónimo</span>
+    <span class="brand-divider">|</span>
+    <span class="brand-location">📍 Córdoba, Argentina</span>
+  </div>
+</div>
+
 <!-- Navbar (solo visible cuando está logueado y no en login/registro) -->
 <nav class="navbar" *ngIf="showNavbar && authService.estaAutenticado()">
   <div class="navbar-container">
@@ -79,5 +89,5 @@
 
 <!-- Footer (opcional) -->
 <footer class="footer" *ngIf="showNavbar && authService.estaAutenticado()">
-  <p>🎭 Confiesa Anónimo - Barrio Alberdi - Córdoba © 2025</p>
+  <p>🎭 Confiesa Anónimo - Córdoba, Argentina © 2025</p>
 </footer>

@@ -31,6 +31,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     title: 'Confesiones'
   },
+  {
+    path: 'admin/confesiones',
+    loadComponent: () => import('./components/confesiones-admin-list/confesiones-list-admin.component').then(m => m.ConfesionesListAdminComponent),
+    canActivate: [AuthGuard],
+    title: 'Confesiones Admin'
+  },
 
   // Ruta 404 - redirige a confesiones
   {
