@@ -1,0 +1,652 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.confesiones-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0a0e27 100%);
+  padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Efecto de fondo animado */
+.confesiones-container::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.05) 0%, transparent 70%);
+  animation: rotate-bg 30s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes rotate-bg {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== HEADER ===== */
+.confesiones-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem 2rem;
+  background: rgba(26, 31, 58, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  animation: slideInDown 0.6s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-content {
+  flex: 1;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.title-icon {
+  font-size: 2.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.header-subtitle {
+  margin: 0.5rem 0 0 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ===== CONTENT ===== */
+.confesiones-content {
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== SKELETON ===== */
+.skeleton-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.confesion-skeleton {
+  background: rgba(26, 31, 58, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.skeleton-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.skeleton-footer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(26, 31, 58, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.empty-icon {
+  font-size: 5rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.empty-state h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.75rem;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.empty-state p {
+  margin: 0 0 2rem 0;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+/* ===== GRID DE CONFESIONES ===== */
+.confesiones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== CARD DE CONFESIÓN ===== */
+.confesion-card {
+  background: rgba(26, 31, 58, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  max-height: 400px;
+}
+
+.confesion-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5),
+  0 0 20px rgba(74, 144, 226, 0.3);
+  border-color: rgba(74, 144, 226, 0.5);
+}
+
+/* Header de la Card */
+.card-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+  border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.author-icon {
+  font-size: 1.25rem;
+  color: var(--accent-cyan);
+}
+
+.author-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-light);
+}
+
+.admin-badge {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.revealed-badge {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.card-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.card-date i {
+  font-size: 1rem;
+}
+
+/* Contenido de la Card */
+.card-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-content::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 10px;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+  background: rgba(74, 144, 226, 0.5);
+  border-radius: 10px;
+}
+
+.confession-text {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  flex: 1;
+}
+
+.ver-mas-btn {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.action-btn:hover {
+  background: rgba(74, 144, 226, 0.2);
+  color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.action-btn i {
+  font-size: 1.1rem;
+}
+
+.action-btn span {
+  font-weight: 700;
+}
+
+/* Like Button */
+.like-btn.liked {
+  color: #ef4444;
+  animation: heartBeat 0.5s ease-out;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(0.9); }
+  75% { transform: scale(1.1); }
+}
+
+.like-btn.liked i {
+  color: #ef4444;
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));
+}
+
+/* Comment Button */
+.comment-btn:hover {
+  color: var(--accent-cyan);
+}
+
+/* Admin Actions */
+.admin-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* ===== DIALOG CUSTOMIZATION ===== */
+.confesiones-container ::ng-deep .confesion-dialog .p-dialog-header {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.9) 0%, rgba(124, 58, 237, 0.9) 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 16px 16px 0 0;
+}
+
+.confesiones-container ::ng-deep .confesion-dialog .p-dialog-content {
+  background: rgba(26, 31, 58, 0.98);
+  color: var(--text-light);
+  padding: 0;
+  border-radius: 0 0 16px 16px;
+}
+
+.confesiones-container ::ng-deep .confesion-dialog .p-dialog {
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  overflow: hidden;
+}
+
+.dialog-header-custom {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dialog-header-custom h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* ===== RESPONSIVE - TABLETS ===== */
+@media (max-width: 992px) {
+  .confesiones-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .confesiones-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skeleton-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .confesiones-container {
+    padding: 1rem;
+  }
+
+  .confesiones-header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .header-title {
+    font-size: 1.75rem;
+  }
+
+  .title-icon {
+    font-size: 2rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .confesiones-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .skeleton-container {
+    grid-template-columns: 1fr;
+  }
+
+  .confesion-card {
+    min-height: 280px;
+  }
+}
+
+/* ===== RESPONSIVE - MÓVILES ===== */
+@media (max-width: 480px) {
+  .confesiones-container {
+    padding: 0.75rem;
+  }
+
+  .confesiones-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+  }
+
+  .title-icon {
+    font-size: 1.75rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .header-actions ::ng-deep .p-button {
+    width: 100%;
+  }
+
+  .card-header {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  .confession-text {
+    font-size: 0.95rem;
+  }
+
+  .card-footer {
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .footer-stats {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .admin-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .action-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .ver-mas-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .empty-state {
+    padding: 3rem 1.5rem;
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+  }
+
+  .empty-state h3 {
+    font-size: 1.5rem;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+  }
+}
+
+/* ===== ANIMACIONES ADICIONALES ===== */
+.confesion-card {
+  animation: cardAppear 0.5s ease-out backwards;
+}
+
+.confesion-card:nth-child(1) { animation-delay: 0.1s; }
+.confesion-card:nth-child(2) { animation-delay: 0.2s; }
+.confesion-card:nth-child(3) { animation-delay: 0.3s; }
+.confesion-card:nth-child(4) { animation-delay: 0.4s; }
+.confesion-card:nth-child(5) { animation-delay: 0.5s; }
+.confesion-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== TOOLTIP CUSTOMIZATION ===== */
+.confesiones-container ::ng-deep .p-tooltip {
+  background: rgba(26, 31, 58, 0.98);
+  color: white;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.confesiones-container ::ng-deep .p-tooltip .p-tooltip-arrow {
+  border-top-color: rgba(26, 31, 58, 0.98);
+}
+
+/* ===== BUTTONS CUSTOMIZATION ===== */
+.confesiones-container ::ng-deep .p-button {
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.confesiones-container ::ng-deep .p-button:hover {
+  transform: translateY(-2px);
+}
+
+.confesiones-container ::ng-deep .p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+}
+
+.confesiones-container ::ng-deep .p-button-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* ===== MESSAGE CUSTOMIZATION ===== */
+.confesiones-container ::ng-deep .p-message {
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.ver-mas-btn:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+}
+
+.ver-mas-btn i {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.ver-mas-btn:hover i {
+  transform: translateX(3px);
+}
+
+/* Footer de la Card */
+.card-footer {
+  padding: 1rem 1.5rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-top: 1px solid rgba(74, 144, 226, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-stats {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}

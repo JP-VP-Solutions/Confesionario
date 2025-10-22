@@ -1,0 +1,99 @@
+<div class="crear-container">
+
+  <!-- Mensaje de error -->
+  <p-message
+    *ngIf="errorMessage"
+    severity="error"
+    [text]="errorMessage"
+    styleClass="w-full mb-3">
+  </p-message>
+
+  <!-- Información -->
+  <div class="info-banner">
+    <i class="pi pi-info-circle"></i>
+    <div class="info-content">
+      <p class="info-title">Tu confesión será completamente anónima</p>
+      <p class="info-subtitle">Nadie sabrá quién eres. Expresa lo que sientes con libertad.</p>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <form [formGroup]="confesionForm" (ngSubmit)="enviarConfesion()">
+
+    <div class="form-group">
+      <label for="contenido" class="form-label">
+        ✍️ Tu Confesión
+      </label>
+
+      <textarea
+        id="contenido"
+        pInputTextarea
+        formControlName="contenido"
+        [rows]="8"
+        [autoResize]="true"
+        [maxlength]="MAX_CHARS"
+        placeholder="Escribe aquí tu confesión... Puede ser algo que necesites sacar de tu pecho, una historia, un sentimiento, o lo que necesites compartir de forma anónima."
+        class="form-textarea"
+        [class.error]="contenido?.invalid && contenido?.touched">
+      </textarea>
+
+      <!-- Contador de caracteres -->
+      <div class="char-counter">
+        <span
+          class="counter-text"
+          [class.warning]="cercaDelLimite"
+          [class.error]="sobrePasaLimite">
+          {{ longitudContenido }} / {{ MAX_CHARS }}
+        </span>
+
+        <span class="counter-min" *ngIf="longitudContenido < MIN_CHARS">
+          (mínimo {{ MIN_CHARS }} caracteres)
+        </span>
+      </div>
+
+      <!-- Mensaje de error -->
+      <small
+        class="p-error"
+        *ngIf="contenido?.invalid && contenido?.touched">
+        {{ getErrorMessage() }}
+      </small>
+    </div>
+
+    <!-- Consejos -->
+    <div class="tips-section">
+      <h4 class="tips-title">
+        <i class="pi pi-lightbulb"></i>
+        Consejos
+      </h4>
+      <ul class="tips-list">
+        <li>Sé respetuoso con los demás</li>
+        <li>No compartas información personal de terceros</li>
+        <li>Evita contenido ofensivo o que incite al odio</li>
+        <li>Recuerda que aunque es anónimo, mantén el respeto</li>
+      </ul>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <p-button
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="cancelarCreacion()"
+        [disabled]="enviando"
+        styleClass="p-button-secondary p-button-outlined">
+      </p-button>
+
+      <p-button
+        type="submit"
+        label="Publicar Confesión"
+        icon="pi pi-send"
+        [loading]="enviando"
+        [disabled]="confesionForm.invalid || enviando"
+        styleClass="p-button-success">
+      </p-button>
+    </div>
+
+  </form>
+
+</div>

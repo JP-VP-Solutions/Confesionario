@@ -32,7 +32,7 @@ import { RegistroRequest } from '../../../models/login-register.dtos';
     ProgressSpinnerModule
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;

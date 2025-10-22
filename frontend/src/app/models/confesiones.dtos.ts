@@ -1,3 +1,5 @@
+import {ComentarioAdminDTO, ComentarioDTO} from './comentarios';
+
 export interface ConfesionRequest {
   contenido: string
 }

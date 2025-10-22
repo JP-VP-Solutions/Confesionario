@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class PublicGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
@@ -18,17 +18,13 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    // Si ya está autenticado, redirigir a confesiones
     if (this.authService.estaAutenticado()) {
-      return true;
+      this.router.navigate(['/confesiones']);
+      return false;
     }
 
-    // Guardar la URL para redirigir después del login (opcional)
-    const returnUrl = state.url !== '/confesiones' ? state.url : null;
-
-    this.router.navigate(['/login'], {
-      queryParams: returnUrl ? { returnUrl } : {}
-    });
-
-    return false;
+    // Si no está autenticado, permitir acceso a login/registro
+    return true;
   }
 }

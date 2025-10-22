@@ -1,113 +1,233 @@
 <div class="login-container">
-  <div class="login-wrapper">
-    <!-- Card principal -->
-    <p-card styleClass="login-card">
-      <!-- Header con logo/título -->
-      <ng-template pTemplate="header">
-        <div class="card-header">
-          <h1 class="title">🎭 Confiesa Anónimo</h1>
-          <p class="subtitle">Barrio Alberdi y todo Córdoba</p>
-        </div>
-      </ng-template>
+  <div class="login-content-wrapper">
 
-      <!-- Contenido del formulario -->
-      <div class="form-content">
-        <h2 class="form-title">Iniciar Sesión</h2>
-
-        <!-- Mensaje de error general -->
-        <p-message
-          *ngIf="errorMensaje"
-          severity="error"
-          [text]="errorMensaje"
-          styleClass="w-full mb-3">
-        </p-message>
-
-        <!-- Mensaje de servidor iniciando -->
-        <p-message
-          *ngIf="serverStarting"
-          severity="warn"
-          text="⏱️ El servidor está iniciando debido a inactividad. Esto puede tardar 1-2 minutos. Por favor, espera y vuelve a intentarlo."
-          styleClass="w-full mb-3">
-        </p-message>
-
-        <!-- Formulario -->
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-          <!-- Campo Username -->
-          <div class="field">
-            <label for="username">Usuario</label>
-            <input
-              id="username"
-              type="text"
-              pInputText
-              formControlName="username"
-              placeholder="Ingresa tu usuario"
-              [class.ng-invalid]="isFieldInvalid('username')"
-              [class.ng-dirty]="username?.dirty"
-              class="w-full" />
-
-            <small
-              *ngIf="isFieldInvalid('username')"
-              class="p-error">
-              {{ getErrorMessage('username') }}
-            </small>
+    <!-- ===== STATS BANNER - ARRIBA DE TODO ===== -->
+    <div class="stats-banner">
+      <!-- Skeleton mientras carga -->
+      <div class="stats-container" *ngIf="loadingStats">
+        <div class="stats-skeleton">
+          <div class="stat-item">
+            <p-skeleton width="3rem" height="3rem" borderRadius="50%" styleClass="mx-auto mb-2"></p-skeleton>
+            <p-skeleton width="4rem" height="2rem" styleClass="mx-auto mb-2"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="mx-auto"></p-skeleton>
           </div>
-
-          <!-- Campo Password -->
-          <div class="field">
-            <label for="password">Contraseña</label>
-            <p-password
-              id="password"
-              formControlName="password"
-              placeholder="Ingresa tu contraseña"
-              [toggleMask]="true"
-              [feedback]="false"
-              styleClass="w-full"
-              [inputStyleClass]="isFieldInvalid('password') ? 'w-full ng-invalid ng-dirty' : 'w-full'">
-            </p-password>
-
-            <small
-              *ngIf="isFieldInvalid('password')"
-              class="p-error">
-              {{ getErrorMessage('password') }}
-            </small>
+          <div class="stat-item">
+            <p-skeleton width="3rem" height="3rem" borderRadius="50%" styleClass="mx-auto mb-2"></p-skeleton>
+            <p-skeleton width="4rem" height="2rem" styleClass="mx-auto mb-2"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="mx-auto"></p-skeleton>
           </div>
-
-          <!-- Botón de login -->
-          <div class="button-container">
-            <p-button
-              type="submit"
-              label="Iniciar Sesión"
-              icon="pi pi-sign-in"
-              [loading]="loading"
-              [disabled]="loading"
-              styleClass="w-full">
-            </p-button>
+          <div class="stat-item">
+            <p-skeleton width="3rem" height="3rem" borderRadius="50%" styleClass="mx-auto mb-2"></p-skeleton>
+            <p-skeleton width="4rem" height="2rem" styleClass="mx-auto mb-2"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="mx-auto"></p-skeleton>
           </div>
-
-        </form>
-
-        <!-- Divider -->
-        <p-divider></p-divider>
-
-        <!-- Link a registro -->
-        <div class="register-link">
-          <p>
-            ¿No tienes cuenta?
-            <a routerLink="/registro" class="link">Regístrate aquí</a>
-          </p>
-        </div>
-
-        <!-- Info adicional -->
-        <div class="info-box">
-          <p class="info-text">
-            <i class="pi pi-info-circle"></i>
-            💡 <strong>Primer uso:</strong> Si es tu primera vez accediendo,
-            el servidor puede tardar 1-2 minutos en iniciar debido a que
-            usamos hosting gratuito. ¡Gracias por tu paciencia!
-          </p>
         </div>
       </div>
-    </p-card>
+
+      <!-- Stats cargados -->
+      <div class="stats-container" *ngIf="!loadingStats && stats">
+        <div class="stat-item">
+          <span class="stat-icon">📝</span>
+          <span class="stat-value">{{ stats.totalConfesiones }}</span>
+          <span class="stat-label">Confesiones</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">👥</span>
+          <span class="stat-value">{{ stats.totalUsuarios }}</span>
+          <span class="stat-label">Usuarios</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">🔥</span>
+          <span class="stat-value">{{ stats.confesionesHoy }}</span>
+          <span class="stat-label">Hoy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CONTENEDOR PRINCIPAL (LOGIN + PREVIEW) ===== -->
+    <div class="main-content">
+
+      <!-- Formulario de Login -->
+      <div class="login-wrapper">
+        <p-card styleClass="login-card">
+          <!-- Header con logo/título -->
+          <ng-template pTemplate="header">
+            <div class="card-header">
+              <h1 class="title">🎭 Confiesa Anónimo</h1>
+              <p class="subtitle">Barrio Alberdi y todo Córdoba</p>
+            </div>
+          </ng-template>
+
+          <!-- Contenido del formulario -->
+          <div class="form-content">
+            <h2 class="form-title">Iniciar Sesión</h2>
+
+            <!-- Mensaje de error general -->
+            <p-message
+              *ngIf="errorMensaje"
+              severity="error"
+              [text]="errorMensaje"
+              styleClass="w-full mb-3">
+            </p-message>
+
+            <!-- Mensaje de servidor iniciando -->
+            <p-message
+              *ngIf="serverStarting"
+              severity="warn"
+              text="⏱️ El servidor está iniciando. Espera 1-2 minutos y vuelve a intentarlo."
+              styleClass="w-full mb-3">
+            </p-message>
+
+            <!-- Formulario -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+              <!-- Campo Username -->
+              <div class="field">
+                <label for="username">Usuario</label>
+                <input
+                  id="username"
+                  type="text"
+                  pInputText
+                  formControlName="username"
+                  placeholder="Ingresa tu usuario"
+                  [class.ng-invalid]="isFieldInvalid('username')"
+                  [class.ng-dirty]="username?.dirty"
+                  class="w-full" />
+
+                <small
+                  *ngIf="isFieldInvalid('username')"
+                  class="p-error">
+                  {{ getErrorMessage('username') }}
+                </small>
+              </div>
+
+              <!-- Campo Password -->
+              <div class="field">
+                <label for="password">Contraseña</label>
+                <p-password
+                  id="password"
+                  formControlName="password"
+                  placeholder="Ingresa tu contraseña"
+                  [toggleMask]="true"
+                  [feedback]="false"
+                  styleClass="w-full"
+                  [inputStyleClass]="isFieldInvalid('password') ? 'w-full ng-invalid ng-dirty' : 'w-full'">
+                </p-password>
+
+                <small
+                  *ngIf="isFieldInvalid('password')"
+                  class="p-error">
+                  {{ getErrorMessage('password') }}
+                </small>
+              </div>
+
+              <!-- Botón de login -->
+              <div class="button-container">
+                <p-button
+                  type="submit"
+                  label="Iniciar Sesión"
+                  icon="pi pi-sign-in"
+                  [loading]="loading"
+                  [disabled]="loading"
+                  styleClass="w-full">
+                </p-button>
+              </div>
+
+            </form>
+
+            <!-- Divider -->
+            <p-divider></p-divider>
+
+            <!-- Link a registro -->
+            <div class="register-link">
+              <p>
+                ¿No tienes cuenta?
+                <a routerLink="/registro" class="link">Regístrate aquí</a>
+              </p>
+            </div>
+
+            <!-- Info adicional -->
+            <div class="info-box">
+              <p class="info-text">
+                <i class="pi pi-info-circle"></i>
+                💡 <strong>Primer uso:</strong> El servidor puede tardar 1-2 minutos en iniciar. ¡Gracias por tu paciencia!
+              </p>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <!-- Preview de Confesiones (Lateral) -->
+      <div class="preview-wrapper">
+        <!-- Skeleton mientras carga -->
+        <ng-container *ngIf="loadingConfesiones">
+          <div class="preview-card" *ngFor="let item of [1, 2]">
+            <div class="preview-header">
+              <h3>💭 Confesión Reciente</h3>
+              <p class="preview-subtitle">Cargando...</p>
+            </div>
+            <div class="preview-skeleton">
+              <p-skeleton height="2rem" styleClass="mb-3"></p-skeleton>
+              <p-skeleton height="5rem" styleClass="mb-3"></p-skeleton>
+              <p-skeleton height="1.5rem" width="60%"></p-skeleton>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Confesiones cargadas -->
+        <ng-container *ngIf="!loadingConfesiones && confesiones && confesiones.length > 0">
+          <div class="preview-card" *ngFor="let confesion of confesiones; let i = index">
+            <div class="preview-header">
+              <h3>💭 Confesión #{{ confesiones.length - i }}</h3>
+              <p class="preview-subtitle">Únete para leer todas las historias...</p>
+            </div>
+
+            <div class="preview-content">
+              <div class="confession-blur">
+                <div class="confession-meta">
+                  <span class="confession-author">
+                    <i class="pi pi-user"></i> Anónimo
+                  </span>
+                  <span class="confession-date">
+                    <i class="pi pi-clock"></i> {{ formatearFecha(confesion.fecha) }}
+                  </span>
+                </div>
+                <p class="confession-text">
+                  {{ truncateText(confesion.contenido, 150) }}
+                </p>
+                <div class="confession-stats">
+                  <span><i class="pi pi-thumbs-up"></i> {{ confesion.likes || 0 }}</span>
+                  <span><i class="pi pi-comment"></i> {{ confesion.comentarios || 0 }}</span>
+                </div>
+              </div>
+
+              <!-- Overlay bloqueador -->
+              <div class="preview-overlay">
+                <div class="overlay-content">
+                  <i class="pi pi-lock"></i>
+                  <h4>Inicia sesión para leer más</h4>
+                  <p>Cientos de confesiones anónimas te esperan</p>
+                  <div class="overlay-icon">🔒</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Sin confesiones disponibles -->
+        <div class="preview-card preview-empty" *ngIf="!loadingConfesiones && (!confesiones || confesiones.length === 0)">
+          <div class="preview-header">
+            <h3>💭 Confesiones</h3>
+            <p class="preview-subtitle">Sé el primero en confesar</p>
+          </div>
+          <div class="preview-content-empty">
+            <i class="pi pi-inbox"></i>
+            <p>Aún no hay confesiones</p>
+            <small>¡Crea tu cuenta y sé el primero!</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
