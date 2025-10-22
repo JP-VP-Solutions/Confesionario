@@ -7,7 +7,6 @@ import {Message} from 'primeng/message';
 import {Button} from 'primeng/button';
 import {Textarea} from 'primeng/textarea';
 import {CommonModule} from '@angular/common';
-import {InputTextarea} from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-crear-confesion',
@@ -18,8 +17,7 @@ import {InputTextarea} from 'primeng/inputtextarea';
     CommonModule,
     ReactiveFormsModule,
     Button,
-    Textarea,
-    InputTextarea
+    Textarea
   ],
   styleUrls: ['./crear-confesion.component.css']
 })
