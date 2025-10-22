@@ -1,0 +1,567 @@
+/* ===== REGISTER CONTAINER DARK ===== */
+.register-container {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0a0e27 100%);
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de partículas animadas */
+.register-container::before,
+.register-container::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.15) 0%, transparent 70%);
+  animation: float 10s ease-in-out infinite;
+  z-index: 0;
+}
+
+.register-container::before {
+  top: -250px;
+  left: -250px;
+}
+
+.register-container::after {
+  bottom: -250px;
+  right: -250px;
+  animation-delay: 5s;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.1); }
+}
+
+.register-wrapper {
+  width: 100%;
+  max-width: 480px;
+  max-height: 95vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 1;
+  animation: zoomIn 0.6s ease-out;
+  /* Scrollbar custom */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(74, 144, 226, 0.5) transparent;
+}
+
+.register-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.register-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.register-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(74, 144, 226, 0.5);
+  border-radius: 3px;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== CARD DARK ===== */
+.register-wrapper ::ng-deep .register-card {
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+  0 0 1px rgba(74, 144, 226, 0.5);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  background: rgba(26, 31, 58, 0.95);
+}
+
+.register-wrapper ::ng-deep .register-card .p-card-header {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.9) 0%, rgba(124, 58, 237, 0.9) 100%);
+  color: white;
+  padding: 1.5rem 1.5rem;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-wrapper ::ng-deep .register-card .p-card-header::after {
+  content: '✨';
+  position: absolute;
+  font-size: 6rem;
+  opacity: 0.15;
+  right: -10px;
+  top: -10px;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.register-wrapper ::ng-deep .register-card .p-card-body {
+  padding: 1.5rem;
+  background: rgba(26, 31, 58, 0.95);
+}
+
+/* ===== HEADER COMPACTO ===== */
+.card-header {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.card-header .title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.card-header .subtitle {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+  opacity: 0.95;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ===== FORM CONTENT COMPACTO ===== */
+.form-content .form-title {
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: var(--text-light);
+  font-weight: 700;
+  font-size: 1.3rem;
+  position: relative;
+}
+
+.form-content .form-title::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 2px;
+}
+
+/* ===== CAMPOS COMPACTOS Y CENTRADOS ===== */
+.field {
+  margin-bottom: 0.9rem;
+  animation: slideInRight 0.5s ease-out backwards;
+  width: 100%;
+  max-width: 100%;
+}
+
+.field:nth-child(1) { animation-delay: 0.1s; }
+.field:nth-child(2) { animation-delay: 0.2s; }
+.field:nth-child(3) { animation-delay: 0.3s; }
+.field:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.field input,
+.field ::ng-deep .p-password {
+  width: 100%;
+  max-width: 100%;
+}
+
+.field input {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-light);
+  text-align: center;
+}
+
+/* ===== ARREGLO DEL PASSWORD CON OJITO ===== */
+.field ::ng-deep .p-password {
+  position: relative;
+  display: block;
+}
+
+.field ::ng-deep .p-password .p-inputtext {
+  width: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: 8px;
+  padding: 0.75rem 3rem 0.75rem 1rem;
+  font-size: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-light);
+  text-align: center;
+}
+
+.field ::ng-deep .p-password .p-password-toggle-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--accent-blue);
+  transition: color 0.3s ease;
+  font-size: 1.1rem;
+  z-index: 10;
+}
+
+.field ::ng-deep .p-password .p-password-toggle-icon:hover {
+  color: var(--accent-cyan);
+}
+
+.field ::ng-deep .p-password-panel {
+  background: rgba(26, 31, 58, 0.95);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: 8px;
+}
+
+.field ::ng-deep .p-password-meter {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.field input::placeholder,
+.field ::ng-deep .p-password input::placeholder {
+  color: var(--text-muted);
+}
+
+.field input:focus,
+.field ::ng-deep .p-password input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.field input.ng-invalid.ng-dirty,
+.field ::ng-deep .p-password input.ng-invalid.ng-dirty {
+  border-color: var(--error);
+  animation: wiggle 0.5s;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.field small.p-error {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--error);
+  font-size: 0.8rem;
+  font-weight: 500;
+  animation: fadeInDown 0.3s;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== MENSAJES COMPACTOS ===== */
+.register-wrapper ::ng-deep .p-message {
+  border-radius: 8px;
+  animation: bounceInDown 0.4s ease-out;
+  margin-bottom: 0.75rem;
+  background: rgba(26, 31, 58, 0.9);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+@keyframes bounceInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== BOTÓN COMPACTO ===== */
+.button-container {
+  margin-top: 1.25rem;
+}
+
+.button-container ::ng-deep .p-button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+  border: none;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.button-container ::ng-deep .p-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.button-container ::ng-deep .p-button:hover::before {
+  left: 100%;
+}
+
+.button-container ::ng-deep .p-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
+}
+
+.button-container ::ng-deep .p-button:active {
+  transform: translateY(-1px);
+}
+
+/* ===== DIVIDER ===== */
+.register-wrapper ::ng-deep .p-divider {
+  margin: 1rem 0;
+}
+
+/* ===== LINK DE LOGIN COMPACTO ===== */
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+  animation: fadeIn 0.6s 0.5s backwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.login-link p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.login-link .link {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.login-link .link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  transition: width 0.3s;
+}
+
+.login-link .link:hover::after {
+  width: 100%;
+}
+
+.login-link .link:hover {
+  color: var(--accent-blue);
+}
+
+/* ===== INFO BOXES COMPACTOS ===== */
+.info-box {
+  margin-top: 0.75rem;
+  padding: 0.9rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.6s backwards;
+  border-left: 4px solid var(--accent-blue);
+}
+
+.info-box:nth-of-type(1) {
+  background: rgba(74, 144, 226, 0.15);
+  border-left-color: var(--accent-blue);
+  animation-delay: 0.6s;
+}
+
+.info-box.warning {
+  background: rgba(245, 158, 11, 0.15);
+  border-left-color: var(--warning);
+  margin-top: 0.6rem;
+  animation-delay: 0.7s;
+}
+
+.info-box .info-text {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.info-box .info-text i {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.info-box:nth-of-type(1) .info-text i {
+  color: var(--accent-cyan);
+}
+
+.info-box.warning .info-text i {
+  color: var(--warning);
+}
+
+.info-box .info-text strong {
+  color: white;
+  font-weight: 700;
+}
+
+/* ===== RESPONSIVE - TABLETS ===== */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 0.75rem;
+  }
+
+  .card-header .title {
+    font-size: 1.75rem;
+  }
+
+  .card-header .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .register-wrapper ::ng-deep .register-card .p-card-body {
+    padding: 1.25rem;
+  }
+
+  .form-content .form-title {
+    font-size: 1.2rem;
+  }
+
+  .field {
+    margin-bottom: 0.8rem;
+  }
+}
+
+/* ===== RESPONSIVE - MÓVILES ===== */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 0.5rem;
+  }
+
+  .card-header .title {
+    font-size: 1.5rem;
+  }
+
+  .card-header .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .register-wrapper ::ng-deep .register-card .p-card-header {
+    padding: 1.25rem 1rem;
+  }
+
+  .register-wrapper ::ng-deep .register-card .p-card-body {
+    padding: 1rem;
+  }
+
+  .form-content .form-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .field {
+    margin-bottom: 0.75rem;
+  }
+
+  .field label {
+    font-size: 0.85rem;
+  }
+
+  .field input,
+  .field ::ng-deep .p-password input {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .button-container {
+    margin-top: 1rem;
+  }
+
+  .button-container ::ng-deep .p-button {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .info-box {
+    padding: 0.75rem;
+  }
+
+  .info-box .info-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== ANIMACIÓN DE CARGA ===== */
+.button-container ::ng-deep .p-button .p-button-loading-icon {
+  animation: rotate360 1s linear infinite;
+}
+
+@keyframes rotate360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

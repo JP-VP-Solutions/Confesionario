@@ -1,0 +1,163 @@
+<div class="register-container">
+  <div class="register-wrapper">
+    <!-- Card principal -->
+    <p-card styleClass="register-card">
+      <!-- Header con logo/título -->
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h1 class="title">🎭 Confiesa Anónimo</h1>
+          <p class="subtitle">Únete a la comunidad</p>
+        </div>
+      </ng-template>
+
+      <!-- Contenido del formulario -->
+      <div class="form-content">
+        <h2 class="form-title">Crear Cuenta</h2>
+
+        <!-- Mensaje de error general -->
+        <p-message
+          *ngIf="errorMensaje"
+          severity="error"
+          [text]="errorMensaje"
+          styleClass="w-full mb-3">
+        </p-message>
+
+        <!-- Mensaje de servidor iniciando -->
+        <p-message
+          *ngIf="serverStarting"
+          severity="warn"
+          text="⏱️ El servidor está iniciando debido a inactividad. Esto puede tardar 1-2 minutos. Por favor, espera y vuelve a intentarlo."
+          styleClass="w-full mb-3">
+        </p-message>
+
+        <!-- Formulario -->
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+          <!-- Campo Username -->
+          <div class="field">
+            <label for="username">Usuario *</label>
+            <input
+              id="username"
+              type="text"
+              pInputText
+              formControlName="username"
+              placeholder="Elige tu nombre de usuario"
+              [class.ng-invalid]="isFieldInvalid('username')"
+              [class.ng-dirty]="username?.dirty"
+              class="w-full" />
+
+            <small
+              *ngIf="isFieldInvalid('username')"
+              class="p-error">
+              {{ getErrorMessage('username') }}
+            </small>
+          </div>
+
+          <!-- Campo Email -->
+          <div class="field">
+            <label for="email">Email *</label>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="tu@gmail.com"
+              [class.ng-invalid]="isFieldInvalid('email')"
+              [class.ng-dirty]="email?.dirty"
+              class="w-full" />
+
+            <small
+              *ngIf="isFieldInvalid('email')"
+              class="p-error">
+              {{ getErrorMessage('email') }}
+            </small>
+          </div>
+
+          <!-- Campo Password -->
+          <div class="field">
+            <label for="password">Contraseña *</label>
+            <p-password
+              id="password"
+              formControlName="password"
+              placeholder="Mínimo 6 caracteres"
+              [toggleMask]="true"
+              [feedback]="true"
+              styleClass="w-full"
+              [inputStyleClass]="isFieldInvalid('password') ? 'w-full ng-invalid ng-dirty' : 'w-full'">
+            </p-password>
+
+            <small
+              *ngIf="isFieldInvalid('password')"
+              class="p-error">
+              {{ getErrorMessage('password') }}
+            </small>
+          </div>
+
+          <!-- Campo Confirm Password -->
+          <div class="field">
+            <label for="confirmPassword">Confirmar Contraseña *</label>
+            <p-password
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Repite tu contraseña"
+              [toggleMask]="true"
+              [feedback]="false"
+              styleClass="w-full"
+              [inputStyleClass]="isFieldInvalid('confirmPassword') ? 'w-full ng-invalid ng-dirty' : 'w-full'">
+            </p-password>
+
+            <small
+              *ngIf="isFieldInvalid('confirmPassword')"
+              class="p-error">
+              {{ getErrorMessage('confirmPassword') }}
+            </small>
+          </div>
+
+          <!-- Botón de registro -->
+          <div class="button-container">
+            <p-button
+              type="submit"
+              label="Crear Cuenta"
+              icon="pi pi-user-plus"
+              [loading]="loading"
+              [disabled]="loading"
+              styleClass="w-full">
+            </p-button>
+          </div>
+
+        </form>
+
+        <!-- Divider -->
+        <p-divider></p-divider>
+
+        <!-- Link a login -->
+        <div class="login-link">
+          <p>
+            ¿Ya tienes cuenta?
+            <a routerLink="/login" class="link">Inicia sesión aquí</a>
+          </p>
+        </div>
+
+        <!-- Info adicional -->
+        <div class="info-box">
+          <p class="info-text">
+            <i class="pi pi-shield"></i>
+            <strong>¡Únete a nuestra comunidad segura!</strong>
+            El registro es necesario para garantizar que solo personas reales puedan participar, manteniendo un espacio auténtico y libre de bots.
+            Tus datos están protegidos y solo se usan para mejorar tu experiencia.
+            ¡Empieza a compartir tus historias en total confianza!
+          </p>
+        </div>
+
+        <!-- Info del servidor -->
+        <div class="info-box warning">
+          <p class="info-text">
+            <i class="pi pi-info-circle"></i>
+            💡 <strong>Primer uso:</strong> Si es tu primera vez accediendo,
+            el servidor puede tardar 1-2 minutos en iniciar. ¡Gracias por tu paciencia!
+          </p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

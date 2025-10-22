@@ -1,0 +1,402 @@
+/* ===== CONTENEDOR PRINCIPAL - SIN LÍNEAS BLANCAS ===== */
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background: #0a0e27;
+}
+
+/* ===== MENSAJE DE SERVIDOR FIJO ===== */
+.server-warning-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: rgba(10, 14, 39, 0.98);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+.server-warning-container ::ng-deep .server-warning-message {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+}
+
+.warning-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.warning-content i {
+  font-size: 1.5rem;
+  color: var(--accent-cyan);
+}
+
+.warning-text {
+  flex: 1;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.warning-text strong {
+  color: var(--accent-cyan);
+}
+
+.close-btn {
+  color: var(--text-muted) !important;
+}
+
+.close-btn:hover {
+  color: var(--text-light) !important;
+}
+
+/* ===== NAVBAR DARK ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(26, 31, 58, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 2rem;
+}
+
+/* ===== LOGO/BRAND ===== */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.brand-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.5));
+}
+
+.brand-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+/* ===== MENÚ DE NAVEGACIÓN ===== */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-menu ::ng-deep .p-button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.navbar-menu ::ng-deep .p-button:hover {
+  border-color: var(--accent-blue);
+  background: rgba(74, 144, 226, 0.15);
+  transform: translateY(-2px);
+}
+
+.navbar-menu ::ng-deep .p-button.p-button-warning {
+  color: var(--warning);
+}
+
+.navbar-menu ::ng-deep .p-button.p-button-warning:hover {
+  border-color: var(--warning);
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.navbar-menu ::ng-deep .p-button.p-button-danger {
+  color: var(--error);
+}
+
+.navbar-menu ::ng-deep .p-button.p-button-danger:hover {
+  border-color: var(--error);
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* ===== INFO USUARIO ===== */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 50px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+.username {
+  color: var(--accent-cyan);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ===== CONTENIDO PRINCIPAL CON IMAGEN DE FONDO ===== */
+.main-content {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 60px; /* Espacio para la barra superior */
+  margin: 0;
+  background-image: url('/assets/images/black-smoke-hacker-mask-84y8z8wtzx83rrju.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.main-content.with-navbar {
+  padding-top: 70px; /* Cuando tiene navbar (logueado) */
+}
+
+/* Overlay más suave para que se vea la imagen */
+.main-content::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 14, 39, 0.50) 0%,
+    rgba(26, 31, 58, 0.40) 50%,
+    rgba(10, 14, 39, 0.50) 100%
+  );
+  backdrop-filter: blur(0.5px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Si no hay imagen, usar gradiente */
+.main-content:not([style*="background-image"]) {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0a0e27 100%);
+}
+
+.main-content.with-navbar {
+  padding-top: 70px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(26, 31, 58, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(74, 144, 226, 0.3);
+  padding: 1rem;
+  text-align: center;
+  z-index: 999;
+}
+
+.footer p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ===== SCROLLBAR CUSTOM (OPCIONAL) ===== */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: rgba(10, 14, 39, 0.5);
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: rgba(74, 144, 226, 0.5);
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 144, 226, 0.7);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+  }
+
+  .brand-text {
+    font-size: 1.1rem;
+  }
+
+  .navbar-menu {
+    gap: 0.5rem;
+  }
+
+  .navbar-menu ::ng-deep .p-button .p-button-label {
+    display: none;
+  }
+
+  .user-info {
+    padding: 0.4rem 0.8rem;
+  }
+
+  .username {
+    font-size: 0.85rem;
+  }
+
+  .main-content {
+    background-attachment: scroll;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand {
+    gap: 0.5rem;
+  }
+
+  .brand-icon {
+    font-size: 1.5rem;
+  }
+
+  .user-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* ===== BARRA SUPERIOR DE MARCA (LOGIN/REGISTRO) ===== */
+.top-brand-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: linear-gradient(135deg, rgba(26, 31, 58, 0.98) 0%, rgba(10, 14, 39, 0.98) 100%);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(74, 144, 226, 0.3);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  animation: slideDown 0.5s ease-out;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.brand-emoji {
+  font-size: 1.75rem;
+  filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.6));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(74, 144, 226, 0.3);
+}
+
+.brand-divider {
+  color: rgba(74, 144, 226, 0.4);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.brand-location {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .brand-container {
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .brand-emoji {
+    font-size: 1.5rem;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .brand-location {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-container {
+    gap: 0.5rem;
+  }
+
+  .brand-divider,
+  .brand-location {
+    display: none; /* Ocultar en móviles pequeños */
+  }
+}

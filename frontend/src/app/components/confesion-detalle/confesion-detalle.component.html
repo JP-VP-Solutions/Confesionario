@@ -1,0 +1,141 @@
+<div class="detalle-container">
+
+  <!-- Header de la Confesión -->
+  <div class="detalle-header">
+    <div class="header-info">
+      <div class="author-info">
+        <i class="pi pi-user author-icon"></i>
+        <span class="author-name">
+          {{ esConfesionAdmin(confesion) && esAdmin ? confesion!.autor : 'Anónimo' }}
+        </span>
+
+        <!-- Badge de Admin -->
+        <span class="admin-badge" *ngIf="esConfesionAdmin(confesion) && esAdmin">
+          <i class="pi pi-eye"></i> Admin View
+        </span>
+
+        <!-- Badge de Revelado -->
+        <span class="revealed-badge" *ngIf="esConfesionAdmin(confesion) && confesion.revelada">
+          <i class="pi pi-lock-open"></i> Revelado
+        </span>
+      </div>
+
+      <div class="date-info">
+        <i class="pi pi-clock"></i>
+        {{ formatearFecha(confesion!.fecha) }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido Completo de la Confesión -->
+  <div class="detalle-content">
+    <p class="confession-full-text">{{ confesion!.contenido }}</p>
+
+    <!-- Stats -->
+    <div class="detalle-stats">
+      <div class="stat-item">
+        <i class="pi pi-heart"></i>
+        <span>{{ confesion!.likes || 0 }} Me gusta</span>
+      </div>
+
+      <div class="stat-item">
+        <i class="pi pi-comment"></i>
+        <span>{{ cantidadComentarios }} Comentarios</span>
+      </div>
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+
+  <!-- Sección de Comentarios -->
+  <div class="comentarios-section">
+    <h3 class="comentarios-title">
+      <i class="pi pi-comments"></i>
+      Comentarios ({{ cantidadComentarios }})
+    </h3>
+
+    <!-- Formulario para nuevo comentario -->
+    <div class="nuevo-comentario">
+      <form [formGroup]="comentarioForm" (ngSubmit)="enviarComentario()">
+        <div class="comentario-input-group">
+          <textarea
+            pInputTextarea
+            formControlName="contenido"
+            placeholder="Escribe un comentario..."
+            [rows]="3"
+            [autoResize]="true"
+            [maxlength]="500"
+            class="comentario-textarea">
+          </textarea>
+
+          <div class="comentario-actions">
+            <small class="char-count" [class.error]="contenido?.value?.length > 500">
+              {{ contenido?.value?.length || 0 }}/500
+            </small>
+
+            <p-button
+              type="submit"
+              label="Comentar"
+              icon="pi pi-send"
+              [loading]="enviandoComentario"
+              [disabled]="comentarioForm.invalid || enviandoComentario"
+              styleClass="p-button-sm">
+            </p-button>
+          </div>
+        </div>
+
+        <small class="p-error" *ngIf="contenido?.invalid && contenido?.touched">
+          El comentario no puede estar vacío
+        </small>
+      </form>
+    </div>
+
+    <!-- Lista de Comentarios -->
+    <div class="comentarios-lista">
+      <!-- Sin comentarios -->
+      <div class="comentarios-empty" *ngIf="comentariosLocales.length === 0">
+        <i class="pi pi-comment"></i>
+        <p>Aún no hay comentarios</p>
+        <small>¡Sé el primero en comentar!</small>
+      </div>
+
+      <!-- Comentarios -->
+      <div class="comentario-item" *ngFor="let comentario of comentariosLocales">
+        <div class="comentario-header">
+          <div class="comentario-author">
+            <i class="pi pi-user"></i>
+            <span class="author-name">
+              {{ obtenerAutorComentario(comentario) }}
+            </span>
+
+            <!-- Badge si es el autor de la confesión -->
+            <span class="autor-badge" *ngIf="esAutorConfesion(comentario)">
+              <i class="pi pi-star-fill"></i> Autor
+            </span>
+          </div>
+
+          <div class="comentario-actions-header">
+            <span class="comentario-fecha">
+              {{ formatearFecha(comentario.fecha) }}
+            </span>
+
+            <!-- Botón eliminar (si es admin o es su comentario) -->
+            <button
+              class="delete-btn"
+              *ngIf="verificarPermisoEliminar(comentario)"
+              (click)="eliminarComentario(comentario)"
+              pTooltip="Eliminar comentario"
+              tooltipPosition="top">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="comentario-content">
+          <p>{{ comentario.contenido }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

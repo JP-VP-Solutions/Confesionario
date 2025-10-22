@@ -1,0 +1,394 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.crear-container {
+  padding: 1.5rem;
+  background: rgba(26, 31, 58, 0.98);
+  color: var(--text-light);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.crear-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.crear-container::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.crear-container::-webkit-scrollbar-thumb {
+  background: rgba(74, 144, 226, 0.5);
+  border-radius: 10px;
+}
+
+.crear-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 144, 226, 0.7);
+}
+
+/* ===== INFO BANNER ===== */
+.info-banner {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-banner i {
+  font-size: 1.75rem;
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.info-content {
+  flex: 1;
+}
+
+.info-title {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.info-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ===== FORMULARIO ===== */
+.form-group {
+  margin-bottom: 1.5rem;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.form-textarea {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(74, 144, 226, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  color: var(--text-light);
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 200px;
+  transition: all 0.3s ease;
+}
+
+.form-textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.form-textarea.error {
+  border-color: var(--error);
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ===== CONTADOR DE CARACTERES ===== */
+.char-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.counter-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.counter-text.warning {
+  color: var(--warning);
+}
+
+.counter-text.error {
+  color: var(--error);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.counter-min {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ===== CONSEJOS ===== */
+.tips-section {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 4px solid var(--warning);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.6s ease-out 0.2s backwards;
+}
+
+.tips-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tips-title i {
+  color: var(--warning);
+  font-size: 1.1rem;
+}
+
+.tips-list {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: var(--text-light);
+}
+
+.tips-list li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.tips-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== ACCIONES ===== */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(74, 144, 226, 0.2);
+  animation: fadeIn 0.6s ease-out 0.3s backwards;
+}
+
+/* ===== MENSAJES DE ERROR ===== */
+.crear-container ::ng-deep .p-message {
+  border-radius: 10px;
+  animation: bounceIn 0.5s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.p-error {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--error);
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* ===== BOTONES ===== */
+.crear-container ::ng-deep .p-button {
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.crear-container ::ng-deep .p-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.crear-container ::ng-deep .p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+}
+
+.crear-container ::ng-deep .p-button-success:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.crear-container ::ng-deep .p-button-secondary {
+  color: var(--text-light);
+}
+
+/* ===== RESPONSIVE - TABLETS ===== */
+@media (max-width: 768px) {
+  .crear-container {
+    padding: 1.25rem;
+  }
+
+  .info-banner {
+    padding: 1rem;
+  }
+
+  .info-title {
+    font-size: 1rem;
+  }
+
+  .info-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .form-label {
+    font-size: 1.05rem;
+  }
+
+  .form-textarea {
+    min-height: 180px;
+    font-size: 0.95rem;
+  }
+
+  .tips-section {
+    padding: 1rem;
+  }
+
+  .tips-title {
+    font-size: 0.95rem;
+  }
+
+  .tips-list li {
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== RESPONSIVE - MÓVILES ===== */
+@media (max-width: 480px) {
+  .crear-container {
+    padding: 1rem;
+  }
+
+  .info-banner {
+    flex-direction: column;
+    padding: 0.9rem;
+  }
+
+  .info-banner i {
+    font-size: 1.5rem;
+  }
+
+  .info-title {
+    font-size: 0.95rem;
+  }
+
+  .info-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .form-label {
+    font-size: 1rem;
+  }
+
+  .form-textarea {
+    min-height: 150px;
+    padding: 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .char-counter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .counter-text,
+  .counter-min {
+    font-size: 0.85rem;
+  }
+
+  .tips-section {
+    padding: 0.9rem;
+  }
+
+  .tips-title {
+    font-size: 0.9rem;
+  }
+
+  .tips-list {
+    padding-left: 1.25rem;
+  }
+
+  .tips-list li {
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .crear-container ::ng-deep .p-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}

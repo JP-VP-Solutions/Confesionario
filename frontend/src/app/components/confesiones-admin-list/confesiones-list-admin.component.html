@@ -1,0 +1,216 @@
+<div class="confesiones-container admin-view">
+
+  <!-- Header -->
+  <div class="confesiones-header">
+    <div class="header-content">
+      <h1 class="header-title">
+        <span class="title-icon">👑</span>
+        Panel de Administrador
+      </h1>
+      <p class="header-subtitle">
+        🎭 Confesiones Anónimas - Vista Completa
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <p-button
+        label="Nueva Confesión"
+        icon="pi pi-plus"
+        (onClick)="abrirModalCrear()"
+        styleClass="p-button-rounded p-button-success">
+      </p-button>
+
+      <p-button
+        label="Salir"
+        icon="pi pi-sign-out"
+        (onClick)="logout()"
+        styleClass="p-button-rounded p-button-danger"
+        [text]="true">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="confesiones-content" *ngIf="loadingConfesiones">
+    <div class="skeleton-container">
+      <div class="confesion-skeleton" *ngFor="let item of [1, 2, 3]">
+        <div class="skeleton-header">
+          <p-skeleton width="150px" height="1.5rem"></p-skeleton>
+          <p-skeleton width="100px" height="1rem"></p-skeleton>
+        </div>
+        <p-skeleton width="100%" height="6rem" styleClass="mb-3"></p-skeleton>
+        <div class="skeleton-footer">
+          <p-skeleton width="60px" height="1.5rem"></p-skeleton>
+          <p-skeleton width="80px" height="1.5rem"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div class="confesiones-content" *ngIf="!loadingConfesiones && errorMessage">
+    <p-message
+      severity="error"
+      [text]="errorMessage"
+      styleClass="w-full">
+    </p-message>
+  </div>
+
+  <!-- Lista de Confesiones -->
+  <div class="confesiones-content" *ngIf="!loadingConfesiones && !errorMessage">
+
+    <!-- Sin confesiones -->
+    <div class="empty-state" *ngIf="confesiones.length === 0">
+      <i class="pi pi-inbox empty-icon"></i>
+      <h3>No hay confesiones aún</h3>
+      <p>Sé el primero en compartir una historia</p>
+      <p-button
+        label="Crear Primera Confesión"
+        icon="pi pi-plus"
+        (onClick)="abrirModalCrear()">
+      </p-button>
+    </div>
+
+    <!-- Grid de Confesiones -->
+    <div class="confesiones-grid" *ngIf="confesiones.length > 0">
+      <div class="confesion-card" *ngFor="let confesion of confesiones">
+
+        <!-- Header de la Card -->
+        <div class="card-header">
+          <div class="card-author">
+            <i class="pi pi-user author-icon"></i>
+            <span class="author-name">{{ confesion.autor }}</span>
+
+            <!-- Badge de Vista Admin -->
+            <span class="admin-badge">
+              <i class="pi pi-eye"></i> Admin
+            </span>
+
+            <!-- Badge de Revelado -->
+            <span class="revealed-badge" *ngIf="confesion.revelada">
+              <i class="pi pi-lock-open"></i> Revelado
+            </span>
+          </div>
+
+          <div class="card-date">
+            <i class="pi pi-clock"></i>
+            {{ formatearFecha(confesion.fecha) }}
+          </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="card-content">
+          <p class="confession-text">
+            {{ truncarTexto(confesion.contenido) }}
+          </p>
+
+          <!-- Botón "Ver más" si es necesario -->
+          <button
+            class="ver-mas-btn"
+            *ngIf="necesitaVerMas(confesion.contenido)"
+            (click)="verConfesionCompleta(confesion)">
+            Ver confesión completa
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Footer con acciones ADMIN -->
+        <div class="card-footer admin-footer">
+          <div class="footer-stats">
+            <!-- Stats -->
+            <div class="stat-item">
+              <i class="pi pi-heart"></i>
+              <span>{{ confesion.likes || 0 }}</span>
+            </div>
+
+            <div class="stat-item">
+              <i class="pi pi-comment"></i>
+              <span>{{ confesion.comentarios || 0 }}</span>
+            </div>
+
+            <!-- Botón Ver Completa -->
+            <button
+              class="ver-completa-btn"
+              (click)="verConfesionCompleta(confesion)">
+              <span>Ver completa</span>
+              <i class="pi pi-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- Acciones de Admin -->
+          <div class="admin-actions">
+            <p-button
+              icon="pi pi-eye"
+              (onClick)="revelarAutor(confesion)"
+              [disabled]="confesion.revelada"
+              pTooltip="Revelar Autor Públicamente"
+              tooltipPosition="top"
+              styleClass="p-button-rounded p-button-warning p-button-sm">
+            </p-button>
+
+            <p-button
+              icon="pi pi-trash"
+              (onClick)="eliminarConfesion(confesion)"
+              pTooltip="Eliminar Confesión"
+              tooltipPosition="top"
+              styleClass="p-button-rounded p-button-danger p-button-sm">
+            </p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal de Confesión Completa -->
+<p-dialog
+  [(visible)]="showModalConfesion"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '90vw', 'max-width': '700px'}"
+  styleClass="confesion-dialog">
+
+  <ng-template pTemplate="header">
+    <div class="dialog-header-custom">
+      <h3>💭 Confesión Completa (Admin View)</h3>
+    </div>
+  </ng-template>
+
+  <app-confesion-detalle
+    *ngIf="confesionSeleccionada"
+    [confesion]="confesionSeleccionada"
+    [usuarioId]="usuarioId"
+    [esAdmin]="true"
+    (cerrar)="cerrarModalConfesion()"
+    (comentarioAgregado)="onComentarioAgregado()">
+  </app-confesion-detalle>
+
+</p-dialog>
+
+<!-- Modal de Crear Confesión -->
+<p-dialog
+  [(visible)]="showModalCrear"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '90vw', 'max-width': '600px'}"
+  styleClass="confesion-dialog">
+
+  <ng-template pTemplate="header">
+    <div class="dialog-header-custom">
+      <h3>✍️ Nueva Confesión</h3>
+    </div>
+  </ng-template>
+
+  <app-crear-confesion
+    *ngIf="showModalCrear"
+    [usuarioId]="usuarioId"
+    (confesionCreada)="onConfesionCreada($event)"
+    (cancelar)="cerrarModalCrear()">
+  </app-crear-confesion>
+
+</p-dialog>
