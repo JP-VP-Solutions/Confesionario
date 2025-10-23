@@ -11,6 +11,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { ConfesionDetalleComponent } from '../confesion-detalle/confesion-detalle.component';
 import { CrearConfesionComponent } from '../crear-confesion-modal/crear-confesion.component';
 import { CommonModule } from '@angular/common';
+import {ConfesionesService} from '../../services/confesiones.service';
 
 @Component({
   selector: 'app-confesiones-list-admin',
@@ -51,7 +52,8 @@ export class ConfesionesListAdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private confesionesService: ConfesionesService
   ) {}
 
   ngOnInit(): void {
@@ -108,9 +110,9 @@ export class ConfesionesListAdminComponent implements OnInit, OnDestroy {
   darLike(confesion: ConfesionAdminDTO): void {
     if (!this.usuarioId) return;
 
+    this.confesionesService.like(confesion.id, this.usuarioId);
     // Nota: Usarías el servicio normal de confesiones para likes
     // Por ahora lo dejamos comentado ya que no está en AdminService
-    console.log('Like functionality - implementar con ConfesionesService si es necesario');
   }
 
   /**

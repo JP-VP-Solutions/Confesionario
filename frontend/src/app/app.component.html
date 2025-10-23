@@ -37,7 +37,7 @@
 <nav class="navbar" *ngIf="showNavbar && authService.estaAutenticado()">
   <div class="navbar-container">
     <!-- Logo/Título -->
-    <div class="navbar-brand" (click)="irAConfesiones()">
+    <div class="navbar-brand">
       <span class="brand-icon">🎭</span>
       <span class="brand-text">Confiesa Anónimo</span>
     </div>
@@ -46,7 +46,7 @@
     <div class="navbar-menu">
       <!-- Info del usuario -->
       <div class="user-info">
-        <span class="username">{{ authService.usuarioActualValue?.username }}</span>
+        <span class="navbar-username">{{ authService.usuarioActualValue?.username | slice:0:12 }}{{ authService.usuarioActualValue!.username.length > 12 ? '…' : '' }}</span>
         <button
           pButton
           type="button"
