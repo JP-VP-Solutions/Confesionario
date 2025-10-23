@@ -1,7 +1,7 @@
 package com.example.Confesionario.service;
 
 import com.example.Confesionario.dto.chat.MensajeChatDTO;
-import com.example.Confesionario.dto.UsuarioSimpleDTO;
+import com.example.Confesionario.dto.chat.UsuarioSimpleDTO;
 import com.example.Confesionario.entities.MensajeChat;
 import com.example.Confesionario.entities.Usuario;
 import com.example.Confesionario.repositories.MensajeChatRepository;

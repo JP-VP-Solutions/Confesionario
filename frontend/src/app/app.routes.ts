@@ -37,6 +37,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     title: 'Confesiones Admin'
   },
+  {
+    path: 'chat',
+    loadComponent: () => import('./components/chat-global/chat-global.component').then(m => m.ChatGlobalComponent),
+    canActivate: [AuthGuard],
+    title: 'Chat Global'
+  },
 
   // Ruta 404 - redirige a confesiones
   {
