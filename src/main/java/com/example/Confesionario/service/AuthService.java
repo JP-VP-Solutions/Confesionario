@@ -1,8 +1,8 @@
 package com.example.Confesionario.service;
 
-import com.example.Confesionario.dto.LoginRequest;
-import com.example.Confesionario.dto.RegistroRequest;
-import com.example.Confesionario.dto.UsuarioResponse;
+import com.example.Confesionario.dto.login.LoginRequest;
+import com.example.Confesionario.dto.login.RegistroRequest;
+import com.example.Confesionario.dto.login.UsuarioResponse;
 
 import com.example.Confesionario.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;

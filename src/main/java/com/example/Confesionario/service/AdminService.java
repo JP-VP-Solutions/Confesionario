@@ -4,7 +4,7 @@ package com.example.Confesionario.service;
 import com.example.Confesionario.repository.ComentarioRepository;
 import com.example.Confesionario.repository.ConfesionRepository;
 
-import com.example.Confesionario.dto.ConfesionAdminDTO;
+import com.example.Confesionario.dto.confesion.ConfesionAdminDTO;
 import com.example.Confesionario.entities.Confesion;
 import com.example.Confesionario.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;

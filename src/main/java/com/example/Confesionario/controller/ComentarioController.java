@@ -1,8 +1,8 @@
 // ComentarioController.java
 package com.example.Confesionario.controller;
 
-import com.example.Confesionario.dto.ComentarioDTO;
-import com.example.Confesionario.dto.ComentarioRequest;
+import com.example.Confesionario.dto.comentario.ComentarioDTO;
+import com.example.Confesionario.dto.comentario.ComentarioRequest;
 import com.example.Confesionario.service.ComentarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

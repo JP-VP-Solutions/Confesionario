@@ -1,7 +1,7 @@
 package com.example.Confesionario.controller;
 
-import com.example.Confesionario.dto.ConfesionPublicaDTO;
-import com.example.Confesionario.dto.ConfesionRequest;
+import com.example.Confesionario.dto.confesion.ConfesionPublicaDTO;
+import com.example.Confesionario.dto.confesion.ConfesionRequest;
 import com.example.Confesionario.service.ConfesionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

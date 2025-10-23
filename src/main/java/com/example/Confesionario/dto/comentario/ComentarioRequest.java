@@ -1,5 +1,5 @@
 // Crear ComentarioRequest.java
-package com.example.Confesionario.dto;
+package com.example.Confesionario.dto.comentario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

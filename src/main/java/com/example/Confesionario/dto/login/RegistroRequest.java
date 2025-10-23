@@ -1,4 +1,4 @@
-package com.example.Confesionario.dto;
+package com.example.Confesionario.dto.login;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
