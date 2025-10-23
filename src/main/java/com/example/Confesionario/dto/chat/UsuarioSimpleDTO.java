@@ -1,4 +1,4 @@
-package com.example.Confesionario.dto;
+package com.example.Confesionario.dto.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
