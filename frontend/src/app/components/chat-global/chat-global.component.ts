@@ -9,7 +9,11 @@ import {
 import { interval, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import {FormsModule} from '@angular/forms';
-import {DatePipe} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {TooltipModule} from 'primeng/tooltip';
+import {ButtonModule} from 'primeng/button';
+import {MessageModule} from 'primeng/message';
 
 interface MensajeSistema {
   contenido: string;
@@ -19,9 +23,15 @@ interface MensajeSistema {
 @Component({
   selector: 'app-chat-global',
   templateUrl: './chat-global.component.html',
+  standalone: true,
   imports: [
     FormsModule,
-    DatePipe
+    DatePipe,
+    CommonModule,
+    ButtonModule,
+    TooltipModule,
+    ScrollPanelModule,
+    MessageModule
   ],
   styleUrls: ['./chat-global.component.css']
 })

@@ -39,7 +39,7 @@
       <div class="mensaje usuario-mensaje" *ngIf="!mensaje.esDelSistema">
         <div class="mensaje-header">
           <div class="usuario-avatar">
-            {{ mensaje.usuario?.username?.charAt(0).toUpperCase() }}
+            {{ mensaje.usuario!.username!.charAt(0).toUpperCase() }}
           </div>
           <div class="mensaje-info">
             <span class="usuario-nombre">{{ mensaje.usuario?.username }}</span>

@@ -44,6 +44,18 @@
 
     <!-- Menú de navegación -->
     <div class="navbar-menu">
+      <!-- Botón Chat Global -->
+      <button
+        pButton
+        type="button"
+        icon="pi pi-comments"
+        class="p-button-text p-button-info chat-button"
+        pTooltip="Chat Global"
+        tooltipPosition="bottom"
+        routerLink="/chat">
+        <span class="chat-label">Chat</span>
+      </button>
+
       <!-- Info del usuario -->
       <div class="user-info">
         <span class="navbar-username">{{ authService.usuarioActualValue?.username | slice:0:12 }}{{ authService.usuarioActualValue!.username.length > 12 ? '…' : '' }}</span>
