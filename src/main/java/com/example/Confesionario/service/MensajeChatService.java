@@ -34,7 +34,7 @@ public class MensajeChatService {
         mensaje.setEsDelSistema(false);
 
         MensajeChat guardado = mensajeChatRepository.save(mensaje);
-        return convertirADTO(guardado, null);
+        return convertirADTO(guardado);
     }
 
     // Crear mensaje del sistema
@@ -43,9 +43,10 @@ public class MensajeChatService {
         mensaje.setContenido(contenido);
         mensaje.setUsuario(null);
         mensaje.setEsDelSistema(true);
+        mensaje.setNombreSistema(nombreSistema); // Guardar el nombre del sistema
 
         MensajeChat guardado = mensajeChatRepository.save(mensaje);
-        return convertirADTO(guardado, nombreSistema);
+        return convertirADTO(guardado);
     }
 
     // Obtener últimos mensajes
@@ -56,7 +57,7 @@ public class MensajeChatService {
         Collections.reverse(mensajes);
 
         return mensajes.stream()
-                .map(m -> convertirADTO(m, null))
+                .map(m -> convertirADTO(m))
                 .collect(Collectors.toList());
     }
 
@@ -65,12 +66,12 @@ public class MensajeChatService {
         List<MensajeChat> mensajes = mensajeChatRepository.findByFechaHoraAfterOrderByFechaHoraAsc(despuesDe);
 
         return mensajes.stream()
-                .map(m -> convertirADTO(m, null))
+                .map(m -> convertirADTO(m))
                 .collect(Collectors.toList());
     }
 
     // Convertir entidad a DTO
-    private MensajeChatDTO convertirADTO(MensajeChat mensaje, String nombreSistema) {
+    private MensajeChatDTO convertirADTO(MensajeChat mensaje) {
         MensajeChatDTO dto = new MensajeChatDTO();
         dto.setId(mensaje.getId());
         dto.setContenido(mensaje.getContenido());
@@ -82,11 +83,11 @@ public class MensajeChatService {
             usuarioDTO.setId(mensaje.getUsuario().getId());
             usuarioDTO.setUsername(mensaje.getUsuario().getUsername());
             dto.setUsuario(usuarioDTO);
-        } else if (mensaje.getEsDelSistema() && nombreSistema != null) {
+        } else if (mensaje.getEsDelSistema() && mensaje.getNombreSistema() != null) {
             // Si es del sistema y viene nombre desde el front
             UsuarioSimpleDTO usuarioDTO = new UsuarioSimpleDTO();
             usuarioDTO.setId(null);
-            usuarioDTO.setUsername(nombreSistema);
+            usuarioDTO.setUsername(mensaje.getNombreSistema());
             dto.setUsuario(usuarioDTO);
         }
 
