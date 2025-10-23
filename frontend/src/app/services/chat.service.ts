@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   MensajeChatDTO,
@@ -20,6 +20,12 @@ export class ChatService {
   // Obtener últimos mensajes
   obtenerMensajes(): Observable<MensajeChatDTO[]> {
     return this.http.get<MensajeChatDTO[]>(`${this.apiUrl}/mensajes`);
+  }
+
+  // NUEVO: Obtener mensajes nuevos después de una fecha
+  obtenerMensajesNuevos(despuesDe: string): Observable<MensajeChatDTO[]> {
+    const params = new HttpParams().set('despuesDe', despuesDe);
+    return this.http.get<MensajeChatDTO[]>(`${this.apiUrl}/mensajes/nuevos`, { params });
   }
 
   // Enviar mensaje de usuario

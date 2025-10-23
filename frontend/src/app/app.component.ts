@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import {RouterOutlet, Router, NavigationEnd, RouterLink} from '@angular/router';
 import { filter } from 'rxjs';
 
 // PrimeNG
@@ -8,6 +8,7 @@ import { MessageModule } from 'primeng/message';
 import { ButtonModule } from 'primeng/button';
 
 import { AuthService } from './services/auth.service';
+import {Tooltip} from 'primeng/tooltip';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,9 @@ import { AuthService } from './services/auth.service';
     CommonModule,
     RouterOutlet,
     MessageModule,
-    ButtonModule
+    ButtonModule,
+    RouterLink,
+    Tooltip
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

@@ -5,9 +5,11 @@ import com.example.Confesionario.dto.chat.MensajeSistemaRequestDTO;
 import com.example.Confesionario.dto.chat.MensajeUsuarioRequestDTO;
 import com.example.Confesionario.service.MensajeChatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -71,4 +73,13 @@ public class MensajeChatController {
         List<MensajeChatDTO> mensajes = mensajeChatService.obtenerUltimosMensajes();
         return ResponseEntity.ok(mensajes);
     }
+
+    // NUEVO: GET: Obtener mensajes nuevos después de una fecha
+    @GetMapping("/mensajes/nuevos")
+    public ResponseEntity<List<MensajeChatDTO>> obtenerMensajesNuevos(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime despuesDe) {
+        List<MensajeChatDTO> mensajes = mensajeChatService.obtenerMensajesNuevos(despuesDe);
+        return ResponseEntity.ok(mensajes);
+    }
+
 }
