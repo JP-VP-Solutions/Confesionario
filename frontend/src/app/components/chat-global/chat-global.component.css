@@ -310,16 +310,16 @@
 
 /* ===== INPUT DE MENSAJE ===== */
 .chat-input-container {
-  background: rgba(10, 14, 31, 0.95);
+  background: rgba(10, 14, 31, 0.98);
   border-top: 2px solid rgba(74, 144, 226, 0.3);
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem 1rem;
   backdrop-filter: blur(10px);
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .input-wrapper {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   align-items: flex-end;
   max-width: 1200px;
   margin: 0 auto;
@@ -327,51 +327,68 @@
 
 .chat-input {
   flex: 1;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.9);
   border: 2px solid rgba(74, 144, 226, 0.3);
-  border-radius: 12px;
-  padding: 0.875rem 1rem;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
   color: #e0e0e0;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-family: inherit;
   resize: none;
+  min-height: 52px;
   max-height: 120px;
+  line-height: 1.5;
   transition: all 0.3s ease;
 }
 
 .chat-input:focus {
   outline: none;
   border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-  background: rgba(15, 23, 42, 0.95);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2);
+  background: rgba(15, 23, 42, 1);
 }
 
 .chat-input::placeholder {
   color: #64748b;
+  font-size: 0.95rem;
 }
 
 .send-button {
   background: linear-gradient(135deg, #4a90e2 0%, #7c3aed 100%) !important;
   border: none !important;
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  padding: 0 !important;
   box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
   transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.send-button .pi {
+  font-size: 1.25rem;
 }
 
 .send-button:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
 }
 
+.send-button:active:not(:disabled) {
+  transform: translateY(0) scale(1);
+}
+
 .send-button:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
+  background: rgba(74, 144, 226, 0.3) !important;
 }
 
 .input-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -379,43 +396,41 @@
 }
 
 .char-counter {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #64748b;
+  font-weight: 500;
 }
 
 .input-hint {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #475569;
+  font-style: italic;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE INPUT ===== */
 @media (max-width: 768px) {
-  .chat-header {
-    padding: 1rem;
-  }
-
-  .header-title {
-    font-size: 1.25rem;
-  }
-
-  .header-subtitle {
-    font-size: 0.75rem;
-  }
-
-  .chat-messages {
-    padding: 1rem;
-  }
-
-  .mensaje {
-    max-width: 95%;
-  }
-
-  .sistema-mensaje {
-    width: 95%;
-  }
-
   .chat-input-container {
-    padding: 0.75rem 1rem;
+    padding: 1rem;
+  }
+
+  .input-wrapper {
+    gap: 0.75rem;
+  }
+
+  .chat-input {
+    font-size: 0.95rem;
+    padding: 0.875rem 1rem;
+    min-height: 48px;
+  }
+
+  .send-button {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+  }
+
+  .send-button .pi {
+    font-size: 1.1rem;
   }
 
   .input-hint {
@@ -424,22 +439,11 @@
 }
 
 @media (max-width: 480px) {
-  .header-icon {
-    font-size: 1.5rem;
-  }
-
-  .header-title {
-    font-size: 1.1rem;
-  }
-
-  .mensaje-contenido,
-  .mensaje-contenido-sistema {
+  .chat-input {
     font-size: 0.9rem;
   }
 
-  .usuario-avatar {
-    width: 32px;
-    height: 32px;
-    font-size: 0.85rem;
+  .char-counter {
+    font-size: 0.75rem;
   }
 }

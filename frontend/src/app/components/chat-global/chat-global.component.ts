@@ -166,18 +166,30 @@ export class ChatGlobalComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Polling cada 0.5 segundos
+  // Polling cada 0.5 segundos - SOLO TRAER NUEVOS
   iniciarPolling(): void {
     this.pollingSubscription = interval(500)
       .pipe(
-        switchMap(() => this.chatService.obtenerMensajes())
+        switchMap(() => {
+          // Si no hay mensajes, traer todos
+          if (this.mensajes.length === 0) {
+            return this.chatService.obtenerMensajes();
+          }
+
+          // Si hay mensajes, traer solo los nuevos después del último
+          const ultimoMensaje = this.mensajes[this.mensajes.length - 1];
+          return this.chatService.obtenerMensajesNuevos(ultimoMensaje.fechaHora);
+        })
       )
       .subscribe({
         next: (mensajes) => {
-          const hayNuevosMensajes = mensajes.length > this.mensajes.length;
-          this.mensajes = mensajes;
-
-          if (hayNuevosMensajes) {
+          if (this.mensajes.length === 0) {
+            // Primera carga
+            this.mensajes = mensajes;
+            setTimeout(() => this.scrollToBottom(), 50);
+          } else if (mensajes.length > 0) {
+            // Agregar solo los nuevos al final
+            this.mensajes.push(...mensajes);
             setTimeout(() => this.scrollToBottom(), 50);
           }
         },
