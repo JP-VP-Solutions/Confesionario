@@ -31,6 +31,10 @@ public class MensajeChat {
     @Column(name = "es_del_sistema", nullable = false)
     private Boolean esDelSistema = false;
 
+    // NUEVO: Guardar el nombre del sistema
+    @Column(name = "nombre_sistema", length = 100)
+    private String nombreSistema;
+
     @PrePersist
     protected void onCreate() {
         fechaHora = LocalDateTime.now();
