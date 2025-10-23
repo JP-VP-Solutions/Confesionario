@@ -1,4 +1,4 @@
-package com.example.Confesionario.dto;
+package com.example.Confesionario.dto.login;
 
 
 import com.example.Confesionario.entities.Usuario;

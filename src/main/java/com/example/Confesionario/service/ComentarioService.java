@@ -1,8 +1,8 @@
 // ComentarioService.java
 package com.example.Confesionario.service;
 
-import com.example.Confesionario.dto.ComentarioDTO;
-import com.example.Confesionario.dto.ComentarioRequest;
+import com.example.Confesionario.dto.comentario.ComentarioDTO;
+import com.example.Confesionario.dto.comentario.ComentarioRequest;
 import com.example.Confesionario.entities.Comentario;
 import com.example.Confesionario.entities.Confesion;
 import com.example.Confesionario.entities.Usuario;

@@ -1,4 +1,4 @@
-package com.example.Confesionario.dto;
+package com.example.Confesionario.dto.confesion;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

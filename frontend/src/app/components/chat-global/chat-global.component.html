@@ -1,0 +1,90 @@
+<div class="chat-global-container">
+  <!-- Header del chat -->
+  <div class="chat-header">
+    <div class="header-content">
+      <i class="pi pi-comments header-icon"></i>
+      <div class="header-info">
+        <h2 class="header-title">Chat Global</h2>
+        <span class="header-subtitle">Conversación en vivo con todos los usuarios</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de mensajes -->
+  <div class="chat-messages" #chatContainer>
+    <!-- Mensaje de carga inicial -->
+    <div class="loading-container" *ngIf="cargando && mensajes.length === 0">
+      <i class="pi pi-spin pi-spinner loading-icon"></i>
+      <p>Cargando mensajes...</p>
+    </div>
+
+    <!-- Lista de mensajes -->
+    <div class="mensaje-wrapper" *ngFor="let mensaje of mensajes"
+         [class.mensaje-sistema]="mensaje.esDelSistema"
+         [class.mensaje-usuario]="!mensaje.esDelSistema">
+
+      <!-- Mensaje del Sistema -->
+      <div class="mensaje sistema-mensaje" *ngIf="mensaje.esDelSistema">
+        <div class="mensaje-header-sistema">
+          <i class="pi pi-bolt sistema-icon"></i>
+          <span class="sistema-nombre">{{ mensaje.usuario?.username || 'Sistema' }}</span>
+          <span class="mensaje-hora">{{ mensaje.fechaHora | date:'HH:mm' }}</span>
+        </div>
+        <div class="mensaje-contenido-sistema">
+          {{ mensaje.contenido }}
+        </div>
+      </div>
+
+      <!-- Mensaje de Usuario -->
+      <div class="mensaje usuario-mensaje" *ngIf="!mensaje.esDelSistema">
+        <div class="mensaje-header">
+          <div class="usuario-avatar">
+            {{ mensaje.usuario?.username?.charAt(0).toUpperCase() }}
+          </div>
+          <div class="mensaje-info">
+            <span class="usuario-nombre">{{ mensaje.usuario?.username }}</span>
+            <span class="mensaje-hora">{{ mensaje.fechaHora | date:'HH:mm' }}</span>
+          </div>
+        </div>
+        <div class="mensaje-contenido">
+          {{ mensaje.contenido }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay mensajes -->
+    <div class="empty-state" *ngIf="!cargando && mensajes.length === 0">
+      <i class="pi pi-comments empty-icon"></i>
+      <p class="empty-text">No hay mensajes aún</p>
+      <p class="empty-subtext">¡Sé el primero en escribir algo!</p>
+    </div>
+  </div>
+
+  <!-- Input para enviar mensaje -->
+  <div class="chat-input-container">
+    <div class="input-wrapper">
+      <textarea
+        [(ngModel)]="nuevoMensaje"
+        (keypress)="onKeyPress($event)"
+        placeholder="Escribe tu mensaje..."
+        class="chat-input"
+        rows="1"
+        maxlength="1000">
+      </textarea>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-send"
+        class="p-button-rounded p-button-primary send-button"
+        [disabled]="!nuevoMensaje.trim()"
+        (click)="enviarMensaje()"
+        pTooltip="Enviar mensaje"
+        tooltipPosition="top">
+      </button>
+    </div>
+    <div class="input-footer">
+      <span class="char-counter">{{ nuevoMensaje.length }}/1000</span>
+      <span class="input-hint">Presiona Enter para enviar</span>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-package com.example.Confesionario.dto;
+package com.example.Confesionario.dto.comentario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ComentarioAdminDTO {
+public class ComentarioDTO {
     private Long id;
     private String contenido;
-    private String autor;  // En el DTO de admin mostramos el autor real
-    private Long autorId;  // ID del autor para referencia
     private LocalDateTime fecha;
+
 }

@@ -1,8 +1,8 @@
 package com.example.Confesionario.service;
 
-import com.example.Confesionario.dto.ComentarioDTO;
-import com.example.Confesionario.dto.ConfesionPublicaDTO;
-import com.example.Confesionario.dto.ConfesionRequest;
+import com.example.Confesionario.dto.comentario.ComentarioDTO;
+import com.example.Confesionario.dto.confesion.ConfesionPublicaDTO;
+import com.example.Confesionario.dto.confesion.ConfesionRequest;
 import com.example.Confesionario.entities.Confesion;
 import com.example.Confesionario.entities.Reaccion;
 import com.example.Confesionario.entities.Usuario;

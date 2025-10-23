@@ -1,8 +1,8 @@
 package com.example.Confesionario.controller;
 
-import com.example.Confesionario.dto.LoginRequest;
-import com.example.Confesionario.dto.RegistroRequest;
-import com.example.Confesionario.dto.UsuarioResponse;
+import com.example.Confesionario.dto.login.LoginRequest;
+import com.example.Confesionario.dto.login.RegistroRequest;
+import com.example.Confesionario.dto.login.UsuarioResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
