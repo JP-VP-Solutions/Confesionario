@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "mensajes_chat")
@@ -37,6 +38,6 @@ public class MensajeChat {
 
     @PrePersist
     protected void onCreate() {
-        fechaHora = LocalDateTime.now();
+        fechaHora = LocalDateTime.now(ZoneId.of("America/Argentina/Cordoba"));
     }
 }

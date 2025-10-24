@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class Confesion {
 
     @PrePersist
     protected void onCreate() {
-        fecha = LocalDateTime.now();
+        fecha = LocalDateTime.now(ZoneId.of("America/Argentina/Cordoba"));
         if (revelada == null) {
             revelada = false;
         }
