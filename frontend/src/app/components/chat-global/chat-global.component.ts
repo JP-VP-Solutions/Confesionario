@@ -204,14 +204,17 @@ export class ChatGlobalComponent implements OnInit, OnDestroy {
 
   // Mensajes del sistema cada 8-12 minutos (random)
   iniciarMensajesSistema(): void {
-    const intervaloBase = 8 * 60 * 1000; // 8 minutos en ms
-    const intervaloRandom = 4 * 60 * 1000; // +4 minutos random
+    // 50% de probabilidad de intervalo largo (15-30 min)
+    const esIntervaloLargo = Math.random() < 0.5;
+
+    const intervaloBase = esIntervaloLargo ? 15 * 60 * 1000 : 5 * 60 * 1000;
+    const intervaloRandom = esIntervaloLargo ? 15 * 60 * 1000 : 5 * 60 * 1000;
 
     const proximoIntervalo = intervaloBase + Math.random() * intervaloRandom;
 
     setTimeout(() => {
       this.enviarMensajeAleatorioDelSistema();
-      this.iniciarMensajesSistema(); // Recursivo para el próximo
+      this.iniciarMensajesSistema();
     }, proximoIntervalo);
   }
 
