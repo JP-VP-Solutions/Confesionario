@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "comentarios")
@@ -34,6 +35,6 @@ public class Comentario {
 
     @PrePersist
     protected void onCreate() {
-        fecha = LocalDateTime.now();
+        fecha = LocalDateTime.now(ZoneId.of("America/Argentina/Cordoba"));
     }
 }

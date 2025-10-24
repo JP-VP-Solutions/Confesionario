@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(name = "usuarios")
@@ -41,7 +42,7 @@ public class Usuario {
 
     @PrePersist
     protected void onCreate() {
-        fechaRegistro = LocalDateTime.now();
+        fechaRegistro = LocalDateTime.now(ZoneId.of("America/Argentina/Cordoba"));
         if (esAdmin == null) {
             esAdmin = false;
         }
