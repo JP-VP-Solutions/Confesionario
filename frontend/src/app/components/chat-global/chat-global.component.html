@@ -2,9 +2,8 @@
   <!-- Header del chat -->
   <div class="chat-header">
     <div class="header-content">
-      <i class="pi pi-comments header-icon"></i>
       <div class="header-info">
-        <h2 class="header-title">Chat Global</h2>
+        <h2 class="header-title">💬 Chat Global</h2>
         <span class="header-subtitle">Conversación en vivo con todos los usuarios</span>
       </div>
     </div>
@@ -21,14 +20,17 @@
     <!-- Lista de mensajes -->
     <div class="mensaje-wrapper" *ngFor="let mensaje of mensajes"
          [class.mensaje-sistema]="mensaje.esDelSistema"
-         [class.mensaje-usuario]="!mensaje.esDelSistema">
+         [class.mensaje-propio]="!mensaje.esDelSistema && mensaje.usuario?.username === usuarioActual"
+         [class.mensaje-usuario]="!mensaje.esDelSistema && mensaje.usuario?.username !== usuarioActual">
 
       <!-- Mensaje del Sistema -->
       <div class="mensaje sistema-mensaje" *ngIf="mensaje.esDelSistema">
         <div class="mensaje-header-sistema">
-          <i class="pi pi-bolt sistema-icon"></i>
-          <span class="sistema-nombre">{{ mensaje.usuario?.username || 'Sistema' }}</span>
-          <span class="mensaje-hora">{{ mensaje.fechaHora | date:'HH:mm' }}</span>
+          <div class="mensaje-info">
+            <span class="sistema-nombre">{{ mensaje.usuario?.username || 'Sistema' }}</span>
+            <span class="sistema-badge">Sistema</span>
+            <span class="mensaje-hora">{{ mensaje.fechaHora | date:'HH:mm':'-0300' }}</span>
+          </div>
         </div>
         <div class="mensaje-contenido-sistema">
           {{ mensaje.contenido }}
@@ -38,12 +40,9 @@
       <!-- Mensaje de Usuario -->
       <div class="mensaje usuario-mensaje" *ngIf="!mensaje.esDelSistema">
         <div class="mensaje-header">
-          <div class="usuario-avatar">
-            {{ mensaje.usuario!.username!.charAt(0).toUpperCase() }}
-          </div>
           <div class="mensaje-info">
             <span class="usuario-nombre">{{ mensaje.usuario?.username }}</span>
-            <span class="mensaje-hora">{{ mensaje.fechaHora | date:'HH:mm' }}</span>
+            <span class="mensaje-hora">{{ mensaje.fechaHora | date:'HH:mm':'-0300' }}</span>
           </div>
         </div>
         <div class="mensaje-contenido">
