@@ -39,6 +39,8 @@ export class ChatGlobalComponent implements OnInit, OnDestroy {
 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
+
+  usuarioActual: string | undefined;
   mensajes: MensajeChatDTO[] = [];
   nuevoMensaje: string = '';
   cargando: boolean = false;
@@ -139,6 +141,7 @@ export class ChatGlobalComponent implements OnInit, OnDestroy {
     this.cargarMensajes();
     this.iniciarPolling();
     this.iniciarMensajesSistema();
+    this.usuarioActual = this.authService.usuarioActualValue?.username;
   }
 
   ngOnDestroy(): void {
